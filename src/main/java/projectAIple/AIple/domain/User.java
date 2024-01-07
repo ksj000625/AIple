@@ -1,10 +1,17 @@
 package projectAIple.AIple.domain;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 /** 유저를 나타내는 클래스
  * @author Seongjin Kim
  */
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
     private String email;
     private String nickname;
     private String password;
@@ -19,6 +26,24 @@ public class User {
         this.email = email;
         this.nickname = nickname;
         this.password = password;
+    }
+
+    public User() {}
+
+    /**
+     * 유저의 ID를 반환하는 getter
+     *
+     * @return 유저의 고유 ID
+     */
+    public String getId() {
+        return id;
+    }
+
+    /** 유저의 ID를 변경하는 setter
+     * @param id 변경하고자 하는 유저의 ID
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 
     /** 유저의 이메일을 반환하는 getter
