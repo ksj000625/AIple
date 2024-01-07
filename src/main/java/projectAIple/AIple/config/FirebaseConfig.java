@@ -42,13 +42,11 @@ public class FirebaseConfig {
 
     @Bean
     public FirebaseAuth initFirebaseAuth() {
-        FirebaseAuth instance = FirebaseAuth.getInstance(app);
-        return instance;
+        return FirebaseAuth.getInstance(app);
     }
 
     @Bean
     public FirebaseMessaging initFirebaseMessaging() {
-        FirebaseMessaging instance = FirebaseMessaging.getInstance(app);
-        return instance;
+        return FirebaseMessaging.getInstance(app);
     }
 }
