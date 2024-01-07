@@ -1,4 +1,4 @@
-package projectAIple.AIple.domain;
+package projectAIple.AIple.model;
 
 public class Provider {
 

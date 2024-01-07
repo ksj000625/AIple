@@ -6,7 +6,7 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
-import projectAIple.AIple.domain.User;
+import projectAIple.AIple.model.User;
 
 public class FirebaseServiceImpl implements FirebaseService {
     private static final String COLLECTION_NAME = "User";

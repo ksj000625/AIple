@@ -1,7 +1,7 @@
 package projectAIple.AIple.service.Firebase;
 
 import org.springframework.stereotype.Service;
-import projectAIple.AIple.domain.User;
+import projectAIple.AIple.model.User;
 
 @Service
 public interface FirebaseService {

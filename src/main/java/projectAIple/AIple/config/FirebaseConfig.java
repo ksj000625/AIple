@@ -4,6 +4,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import projectAIple.AIple.service.Firebase.FirebaseService;
@@ -16,9 +17,11 @@ import java.io.IOException;
 @Configuration
 public class FirebaseConfig {
 
+    FirebaseApp app;
+
     @Bean
     public FirebaseApp initFirebase() throws IOException {
-        FirebaseApp app = FirebaseApp.getInstance();
+        this.app = FirebaseApp.getInstance();
 
         // FirebaseApp 객체가 없으면 생성합니다.
         if (app == null) {
@@ -35,5 +38,17 @@ public class FirebaseConfig {
     @Bean
     public FirebaseService firebaseService() {
         return new FirebaseServiceImpl();
+    }
+
+    @Bean
+    public FirebaseAuth initFirebaseAuth() {
+        FirebaseAuth instance = FirebaseAuth.getInstance(app);
+        return instance;
+    }
+
+    @Bean
+    public FirebaseMessaging initFirebaseMessaging() {
+        FirebaseMessaging instance = FirebaseMessaging.getInstance(app);
+        return instance;
     }
 }
