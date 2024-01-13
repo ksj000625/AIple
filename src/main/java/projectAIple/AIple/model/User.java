@@ -1,4 +1,4 @@
-package projectAIple.AIple.domain;
+package projectAIple.AIple.model;
 
 import com.google.cloud.Timestamp;
 import lombok.*;

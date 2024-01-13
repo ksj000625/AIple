@@ -5,7 +5,7 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
-import projectAIple.AIple.domain.User;
+import projectAIple.AIple.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ public class UserRepository {
         DocumentReference document = null;
         if (isExistEmail(querySnapshot)) {
             document = FIRE_STORE.collection(COLLECTION_NAME).document(user.getId());
-            document.update("name", user.getNickname());
+            document.update("nickname", user.getNickname());
             document.update("update_dt", Timestamp.now());
             log.info("문서가 수정되었습니다. document ID: {}", document.getId());
         } else {
