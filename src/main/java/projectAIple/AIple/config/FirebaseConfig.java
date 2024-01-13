@@ -3,50 +3,25 @@ package projectAIple.AIple.config;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.messaging.FirebaseMessaging;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import projectAIple.AIple.service.Firebase.FirebaseService;
-import projectAIple.AIple.service.Firebase.FirebaseServiceImpl;
 
 import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
-import java.io.IOException;
 
 @Configuration
 public class FirebaseConfig {
-
-    FirebaseApp app;
-
-    @Bean
-    public FirebaseApp initFirebase() throws IOException {
-        this.app = FirebaseApp.getInstance();
-
-        // FirebaseApp 객체가 없으면 생성합니다.
-        if (app == null) {
+    @PostConstruct
+    public void init() {
+        try {
             FileInputStream serviceAccount = new FileInputStream("src/main/resources/aiple-firebase-key.json");
-            FirebaseOptions options = FirebaseOptions.builder()
+            FirebaseOptions.Builder optionBuilder = FirebaseOptions.builder();
+            FirebaseOptions options = optionBuilder
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .build();
-            app = FirebaseApp.initializeApp(options);
+            FirebaseApp.initializeApp(options);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        return app;
     }
 
-    @Bean
-    public FirebaseService firebaseService() {
-        return new FirebaseServiceImpl();
-    }
-
-    @Bean
-    public FirebaseAuth initFirebaseAuth() {
-        return FirebaseAuth.getInstance(app);
-    }
-
-    @Bean
-    public FirebaseMessaging initFirebaseMessaging() {
-        return FirebaseMessaging.getInstance(app);
-    }
 }
