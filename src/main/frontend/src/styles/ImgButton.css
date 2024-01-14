@@ -1,0 +1,34 @@
+.img-button-container {
+	display: flex;
+	flex-direction: column;
+	margin-top: 10%;
+	margin-bottom: 10%;
+	padding-right: 20%;
+}
+
+.img-button {
+	width: 350px;
+	height: 160px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	padding-left: 30px;
+	margin-bottom: 20px;
+	border-radius: 10px;
+	background-color: #fff;
+	cursor: pointer;
+}
+
+.img-button:hover {
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	transition: 0.2s;
+}
+
+.img-button-title {
+	font-size: 1.25rem;
+	font-weight: bold;
+}
+
+.img-button > img {
+	height: 8.5rem;
+}
