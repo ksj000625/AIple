@@ -1,53 +1,23 @@
 import React, {useEffect, useState, useRef} from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faStarOfLife} from '@fortawesome/free-solid-svg-icons';
+import {useForm} from "react-hook-form";
+import "../styles/Form.css";
 
 export default function ClientSignup() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [nickname, setNickname] = useState('');
     const [profileImage, setProfileImage] = useState(null);
 
-    const [emailValid, setEmailValid] = useState(false);
-    const [passwordValid, setPasswordValid] = useState(false);
-    const [nicknameValid, setNicknameValid] = useState(false);
-
-    const [notAllow, setNotAllow] = useState(true);
+    const {
+        register,
+        handleSubmit,
+        formState: {
+            isSubmitting,
+            isSubmitted,
+            errors
+        }
+    } = useForm();
 
     const inputRef = useRef(null);
-
-    /**이메일  유효성 검사*/
-    const handleEmail = (e) => {
-        setEmail(e.target.value);
-        const regex = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
-        if (regex.test(email)) {
-            setEmailValid(true);
-        } else {
-            setEmailValid(false);
-        }
-    };
-    /**비밀번호  유효성 검사*/
-    const handlePassword = (e) => {
-        setPassword(e.target.value);
-        const regex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$/;
-        if (regex.test(password)) {
-            setPasswordValid(password);
-            setPasswordValid(true);
-        } else {
-            setPasswordValid(password);
-            setPasswordValid(false);
-        }
-    };
-
-    const handleNickname = (e) => {
-        setNickname(e.target.value);
-        const regex = /^[a-zA-Z0-9가-힣]{2,10}$/;
-        if (regex.test(nickname)) {
-            setNicknameValid(true);
-        } else {
-            setNicknameValid(false);
-        }
-    };
 
     const handleImageUpload = (e) => {
         const file = e
@@ -69,18 +39,7 @@ export default function ClientSignup() {
             .current
             .click();
     };
-
-    /**이메일,패스워드 유효 -> 가입완료 버튼 활성화 */
-    useEffect(() => {
-        if (emailValid && passwordValid && nicknameValid) {
-            setNotAllow(false);
-            return;
-        }
-        setNotAllow(true);
-    }, [emailValid, passwordValid, nicknameValid]);
-
     return (
-
         <div className="ClientSignup">
             {/* <header>header</header> */}
             <div className="main">
@@ -91,7 +50,11 @@ export default function ClientSignup() {
                             <div className="desc">AI의 힘을 경험하세요. 지금 바로 가입 하고, 당신만의 디자인을 의뢰하세요.</div>
                         </div>
                         <div className="form-container">
-                            <fieldset>
+                            <form
+                                onSubmit={handleSubmit(async (data) => {
+                                    await new Promise((r) => setTimeout(r, 1000));
+                                    alert(JSON.stringify(data));
+                                })}>
                                 <div className="form-title-container">
                                     <div className="title">기본 회원 정보</div>
                                 </div>
@@ -111,15 +74,24 @@ export default function ClientSignup() {
                                             id="email"
                                             name="email"
                                             placeholder="이메일 입력"
-                                            value={email}
-                                            onChange={handleEmail}/>
-                                        <div className="error-message-wrap">
-                                            {!emailValid && email.length > 0 && (<div>올바른 이메일을 입력해주세요.</div>)}
-                                        </div>
+                                            aria-invalid={isSubmitted
+                                                ? (
+                                                    errors.email
+                                                        ? "true"
+                                                        : "false"
+                                                )
+                                                : undefined}
+                                            {...register("email", {
+                                                required: "이메일을 입력해주세요.",
+                                                pattern: {
+                                                  value: /\S+@\S+\.\S+/,
+                                                  message: "이메일 형식에 맞지 않습니다.",
+                                                },
+                                              })}/> {errors.email && <small className="error-message" role="alert">{errors.email.message}</small>}
                                     </div>
                                     <div class="form-group">
                                         <div className="form-label-container">
-                                            <label for="new-password">비밀번호</label>
+                                            <label for="password">비밀번호</label>
                                             <FontAwesomeIcon
                                                 icon={faStarOfLife}
                                                 size="2xs"
@@ -132,15 +104,20 @@ export default function ClientSignup() {
                                             id="password"
                                             name="password"
                                             placeholder="8자 이상 20자 이내 영문/숫자 포함"
-                                            value={password}
-                                            onChange={handlePassword}/>
-                                        <div className="error-message-wrap">
-                                            {
-                                                !passwordValid && password.length > 0 && (
-                                                    <div>영문, 숫자 포함 8자 이상 20자 이내로 입력해주세요.</div>
+                                            aria-invalid={isSubmitted
+                                                ? (
+                                                    errors.password
+                                                        ? "true"
+                                                        : "false"
                                                 )
-                                            }
-                                        </div>
+                                                : undefined}
+                                            {...register("password", {
+                                                required: "비밀번호를 입력해주세요.",
+                                                minLength: {
+                                                  value: 8,
+                                                  message: "8자리 이상 입력해주세요.",
+                                                },
+                                              })}/> {errors.password && <small className="error-message" role="alert">{errors.password.message}</small>}
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -159,8 +136,19 @@ export default function ClientSignup() {
                                             id="nickname"
                                             name="nickname"
                                             placeholder="ex.에이플"
-                                            value={nickname}
-                                            onChange={handleNickname}/>
+                                            aria-invalid={isSubmitted
+                                                ? (
+                                                    errors.nickname
+                                                        ? "true"
+                                                        : "false"
+                                                )
+                                                : undefined}
+                                            {...register("nickname", {                                                
+                                                minLength: {
+                                                  value: 2,
+                                                  message: "두 자리 이상 입력해주세요.",
+                                                },
+                                              })}/> {errors.nickname && <small role="alert">{errors.nickname.message}</small>}
                                     </div>
                                     <div class="form-group">
                                         <div className="form-label-container">
@@ -195,10 +183,11 @@ export default function ClientSignup() {
                                         </div>
                                     </div>
                                 </div>
-                            </fieldset>
-                            <div className="submit-button-container">
-                                <button disabled={notAllow} className="submit-button">가입 완료</button>
-                            </div>
+
+                                <div className="submit-button-container">
+                                    <button type="submit" disabled={isSubmitting} className="submit-button">가입 완료</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
