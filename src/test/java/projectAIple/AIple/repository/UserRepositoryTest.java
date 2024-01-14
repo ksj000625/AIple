@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import projectAIple.AIple.model.User;
+import projectAIple.AIple.domain.user.model.User;
+import projectAIple.AIple.domain.user.repository.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
