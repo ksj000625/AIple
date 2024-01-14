@@ -13,14 +13,6 @@ import ClientSignup from "./pages/ClientSignup";
 import DesignerSignup from "./pages/DesignerSignup";
 
 function App() {
-	const [hello, setHello] = useState("");
-
-	useEffect(() => {
-		axios
-			.get("/api/hello")
-			.then((response) => setHello(response.data))
-			.catch((error) => console.log(error));
-	}, []);
 
 	return (
 		<BrowserRouter>

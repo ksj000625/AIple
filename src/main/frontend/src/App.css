@@ -244,7 +244,7 @@ input::placeholder {
   align-items: center;
   margin-right: 10px;
   border: #CFCFCF solid 1px;
-  border-radius: 5px;
+  border-radius: 50%;
   cursor: pointer;
 }
 

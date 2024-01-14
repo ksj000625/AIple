@@ -1,8 +1,9 @@
 import React, {useEffect, useState, useRef} from "react";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faStarOfLife} from '@fortawesome/free-solid-svg-icons';
+import axios from "axios";
 
-export default function ClientSignup() {
+export default function ClientSignup(props) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [nickname, setNickname] = useState('');
@@ -22,6 +23,7 @@ export default function ClientSignup() {
         const regex = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
         if (regex.test(email)) {
             setEmailValid(true);
+            console.log("email accessed");
         } else {
             setEmailValid(false);
         }
@@ -31,10 +33,9 @@ export default function ClientSignup() {
         setPassword(e.target.value);
         const regex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$/;
         if (regex.test(password)) {
-            setPasswordValid(password);
             setPasswordValid(true);
+            console.log("password accessed");
         } else {
-            setPasswordValid(password);
             setPasswordValid(false);
         }
     };
@@ -44,6 +45,7 @@ export default function ClientSignup() {
         const regex = /^[a-zA-Z0-9가-힣]{2,10}$/;
         if (regex.test(nickname)) {
             setNicknameValid(true);
+            console.log("nickname accessed");
         } else {
             setNicknameValid(false);
         }
@@ -72,12 +74,36 @@ export default function ClientSignup() {
 
     /**이메일,패스워드 유효 -> 가입완료 버튼 활성화 */
     useEffect(() => {
+        console.log("started!");
         if (emailValid && passwordValid && nicknameValid) {
             setNotAllow(false);
             return;
         }
         setNotAllow(true);
     }, [emailValid, passwordValid, nicknameValid]);
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+
+        const variable = {
+            email: email,
+            nickname: nickname,
+            password: password,
+            profileImage: profileImage,
+        };
+        console.log("onSubmittied!");
+
+        axios.post("/api/user/signUpUser", variable).then((response) => {
+            if (response.data.success) {
+                alert("SignUpped!");
+                setTimeout(() => {
+                    props.history.push("/");
+                }, 1000);
+            } else {
+                alert("회원가입에 실패했습니다.");
+            }
+        });
+    }
 
     return (
 
@@ -95,10 +121,10 @@ export default function ClientSignup() {
                                 <div className="form-title-container">
                                     <div className="title">기본 회원 정보</div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group">
+                                <div className="form-row">
+                                    <div className="form-group">
                                         <div className="form-label-container">
-                                            <label for="email">이메일</label>
+                                            <label>이메일</label>
                                             <FontAwesomeIcon
                                                 icon={faStarOfLife}
                                                 size="2xs"
@@ -117,9 +143,9 @@ export default function ClientSignup() {
                                             {!emailValid && email.length > 0 && (<div>올바른 이메일을 입력해주세요.</div>)}
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div className="form-group">
                                         <div className="form-label-container">
-                                            <label for="new-password">비밀번호</label>
+                                            <label>비밀번호</label>
                                             <FontAwesomeIcon
                                                 icon={faStarOfLife}
                                                 size="2xs"
@@ -143,10 +169,10 @@ export default function ClientSignup() {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group">
+                                <div className="form-row">
+                                    <div className="form-group">
                                         <div className="form-label-container">
-                                            <label for="nickname">닉네임</label>
+                                            <label>닉네임</label>
                                             <FontAwesomeIcon
                                                 icon={faStarOfLife}
                                                 size="2xs"
@@ -162,9 +188,9 @@ export default function ClientSignup() {
                                             value={nickname}
                                             onChange={handleNickname}/>
                                     </div>
-                                    <div class="form-group">
+                                    <div className="form-group">
                                         <div className="form-label-container">
-                                            <label for="profile">프로필 이미지 등록</label>
+                                            <label>프로필 이미지 등록</label>
                                         </div>
                                         <div className="profile-container">
                                             <div className="profile-image" onClick={handleProfileClick}>
@@ -181,7 +207,7 @@ export default function ClientSignup() {
                                                                     borderRadius: '50%'
                                                                 }}/>
                                                         )
-                                                        : <img src={process.env.PUBLIC_URL + "/user-solid.svg"}/>
+                                                        : <img alt="profileImage" src={process.env.PUBLIC_URL + "/user-solid.svg"}/>
                                                 }
                                             </div>
                                             <input
@@ -197,7 +223,13 @@ export default function ClientSignup() {
                                 </div>
                             </fieldset>
                             <div className="submit-button-container">
-                                <button disabled={notAllow} className="submit-button">가입 완료</button>
+                                <button
+                                    disabled={notAllow}
+                                    className="submit-button"
+                                    onClick={onSubmit}
+                                >
+                                    가입 완료
+                                </button>
                             </div>
                         </div>
                     </div>

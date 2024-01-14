@@ -47,6 +47,14 @@ public class User {
      * 유저의 snsID를 반환하는 getter
      */
     private String snsID;
+    /**
+     * -- GETTER --
+     * 유저의 프로필이미지를 반환하는 getter
+     * -- SETTER --
+     * 유저의 프로필이미지를 변경하는 setter
+     *
+     */
+    private String profileImage;
     private Timestamp create_dt;
     private Timestamp update_dt;
 
@@ -55,10 +63,10 @@ public class User {
 //     * @param nickname 유저의 닉네임
 //     * @param password 유저의 비밀번호
 //     */
-//    public User(String email, String nickname, String password) {
-//        this.email = email;
-//        this.nickname = nickname;
-//        this.password = password;
-//    }
+    public User(String email, String nickname, String password) {
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+    }
 
 }
