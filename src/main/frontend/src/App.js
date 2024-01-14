@@ -1,7 +1,6 @@
 // src/main/frontend/src/App.js
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import "./normalization.css";
 import "./App.css";
 
@@ -11,6 +10,7 @@ import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import ClientSignup from "./pages/ClientSignup";
 import DesignerSignup from "./pages/DesignerSignup";
+import axios from "axios";
 
 function App() {
 

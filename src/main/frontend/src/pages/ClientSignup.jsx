@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStarOfLife } from "@fortawesome/free-solid-svg-icons";
 import { useForm } from "react-hook-form";
 import "../styles/Form.css";
+import axios from "axios";
 
 export default function ClientSignup() {
+
 	const [profileImage, setProfileImage] = useState(null);
 
 	const {
@@ -32,39 +34,6 @@ export default function ClientSignup() {
 		inputRef.current.click();
 	};
 
-	/**이메일,패스워드 유효 -> 가입완료 버튼 활성화 */
-	useEffect(() => {
-		console.log("started!");
-		if (emailValid && passwordValid && nicknameValid) {
-			setNotAllow(false);
-			return;
-		}
-		setNotAllow(true);
-	}, [emailValid, passwordValid, nicknameValid]);
-
-	const onSubmit = (e) => {
-		e.preventDefault();
-
-		const variable = {
-			email: email,
-			nickname: nickname,
-			password: password,
-			profileImage: profileImage,
-		};
-		console.log("onSubmittied!");
-
-		axios.post("/api/user/signUpUser", variable).then((response) => {
-			if (response.data.success) {
-				alert("SignUpped!");
-				setTimeout(() => {
-					props.history.push("/");
-				}, 1000);
-			} else {
-				alert("회원가입에 실패했습니다.");
-			}
-		});
-	};
-
 	return (
 		<div className="ClientSignup">
 			{/* <header>header</header> */}
@@ -81,8 +50,11 @@ export default function ClientSignup() {
 						<div className="form-container">
 							<form
 								onSubmit={handleSubmit(async (data) => {
-									await new Promise((r) => setTimeout(r, 1000));
+									// await new Promise((r) => setTimeout(r, 1000));
 									alert(JSON.stringify(data));
+									axios.post("/api/user/signUpUser", JSON.stringify(data))
+										.then(()=> console.log(data))
+										.catch(err => console.log(err));
 								})}
 							>
 								<div className="form-title-container">
@@ -128,7 +100,7 @@ export default function ClientSignup() {
 									</div>
 									<div className="form-group">
 										<div className="form-label-container">
-											<label for="password">비밀번호</label>
+											<label>비밀번호</label>
 											<FontAwesomeIcon
 												icon={faStarOfLife}
 												size="2xs"
