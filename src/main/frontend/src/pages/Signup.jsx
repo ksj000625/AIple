@@ -12,7 +12,7 @@ export default function Signup() {
                         <div className="title-container">
                             <div className="title">AIple 회원가입</div>
                             <div className="desc">
-                                뤼튼에서는 창작의 힘을 이어받습니다.
+                                AIple에서는 창작의 힘을 이어받습니다.
                                 <br/>
                                 여러분의 아이디어와 우리의 AI 디자이너가 만나는 순간,
                                 <br/>

@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import Signup from "./pages/Signup";
 import ClientSignup from "./pages/ClientSignup";
 import DesignerSignup from "./pages/DesignerSignup";
+import Main from "./pages/Main";
 import axios from "axios";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
 				<Route path="/signup" element={<Signup />} />
 				<Route path="/signup/client" element={<ClientSignup />} />
 				<Route path="/signup/designer" element={<DesignerSignup />} />
+				<Route path="/main" element={<Main/>} />
 			</Routes>
 		</BrowserRouter>
 	);
