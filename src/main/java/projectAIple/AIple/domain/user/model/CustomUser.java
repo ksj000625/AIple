@@ -20,11 +20,9 @@ public class CustomUser implements UserDetails {
 
     @Builder
     public CustomUser(String username, String email, String nickname) {
-        super();
     }
 
     public CustomUser() {
-        super();
     }
 
 

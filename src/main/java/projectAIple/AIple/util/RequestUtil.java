@@ -2,10 +2,14 @@ package projectAIple.AIple.util;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class RequestUtil {
 
     public static String getAuthorizationToken(String header) {
-        // header.replace("Bearer ", "");
+        header.replace("Bearer ", "");
+        log.info(header);
         // Authorization: Bearer <access_token>
         if (header == null || !header.startsWith("Bearer ")) {
             throw new IllegalArgumentException("Invalid authorization header");

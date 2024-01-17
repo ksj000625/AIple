@@ -8,20 +8,30 @@ const RegisterForm =  ({ setRegisterFormOpen }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const nickname = event.target.nickname.value
+        const nickname = event.target.nickname.value;
         console.log(`nickname :${nickname}`);
-        const res =  await fetch("/api/users/signUp", {
-            method: "POST",
-            headers: defaultHeaders,
-            body: JSON.stringify({
-                nickname: nickname,
-            }),
-            mode: "cors"
-        });
-        const user = await res.json();
-        console.log(`post /users ${JSON.stringify(user)}`);
-        setRegisterFormOpen(false);
-        setUser(user);
+
+        try {
+            const res = await fetch("/api/users/signUp", {
+                method: "POST",
+                headers: defaultHeaders,
+                body: JSON.stringify({
+                    nickname: nickname
+                }),
+            });
+
+            if (!res.ok) {
+                throw new Error(`API 요청 실패: ${res.statusText}`);
+            }
+
+            const user = await res.json();
+            console.log(`post /users ${JSON.stringify(user)}`);
+            setRegisterFormOpen(false);
+            setUser(user);
+        } catch (error) {
+            console.error("회원가입 실패:", error);
+            // 사용자에게 에러 메시지 표시
+        }
     };
 
     return (

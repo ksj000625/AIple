@@ -8,7 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import projectAIple.AIple.domain.user.model.CustomUser;
 import projectAIple.AIple.domain.user.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 
+import java.util.Optional;
+
+@Slf4j
 @Service
 public class CustomUserService implements UserDetailsService {
     @Autowired
@@ -16,6 +20,9 @@ public class CustomUserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.info(String.valueOf(userRepository.count()));
+//        Optional<CustomUser> userDetails = userRepository.findById(username);
+//        return userDetails.orElse(null);
         return userRepository.findById(username).get();
     }
 
