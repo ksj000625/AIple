@@ -1,8 +1,6 @@
 package projectAIple.AIple.domain.user.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,10 +20,11 @@ public class CustomUser implements UserDetails {
 
     @Builder
     public CustomUser(String username, String email, String nickname) {
+        super();
     }
 
     public CustomUser() {
-
+        super();
     }
 
 

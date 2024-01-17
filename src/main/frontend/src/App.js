@@ -1,29 +1,18 @@
-// src/main/frontend/src/App.js
-
-import React from "react";
-import "./normalization.css";
-import "./App.css";
-
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "./components/Header";
-import Home from "./pages/Home";
-import Signup from "./pages/Signup";
-import ClientSignup from "./pages/ClientSignup";
-import DesignerSignup from "./pages/DesignerSignup";
-import axios from "axios";
+import { useContext } from 'react';
+import { UserContext } from './components/AuthProvider';
+import { signInGoogle, signOut } from './auth/firebaseAuth';
+import './index.css';
 
 function App() {
-
+	const { user }  = useContext(UserContext);
 	return (
-		<BrowserRouter>
-			<Header />
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/signup" element={<Signup />} />
-				<Route path="/signup/client" element={<ClientSignup />} />
-				<Route path="/signup/designer" element={<DesignerSignup />} />
-			</Routes>
-		</BrowserRouter>
+		<div>
+			{user ? ( <div className='main'> <p>{user.nickname} <br/> {user.email} </p> </div> ) :
+				( <div className='main'> <p>SNS Sample</p> </div> )}
+			{user ? (  <button className='signin' onClick={signOut}>Sign Out</button> ) :
+				(
+					<button className='signin' onClick={signInGoogle}>Sign in With Google</button> )}
+		</div>
 	);
 }
 

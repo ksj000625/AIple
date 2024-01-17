@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import projectAIple.AIple.domain.user.model.CustomUser;
@@ -22,8 +23,8 @@ public class UserController {
     @Autowired
     private CustomUserService customUserDetailsService;
 
-    @PostMapping("")
-    public UserInfo register(@RequestHeader("Authorization") String authorization,
+    @PostMapping("/signUp")
+    public UserInfo register(@RequestHeader(value="Authorization") String authorization,
                              @RequestBody RegisterInfo registerInfo) {
         // TOKEN을 가져온다.
         FirebaseToken decodedToken;
