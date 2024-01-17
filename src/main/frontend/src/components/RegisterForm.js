@@ -8,15 +8,14 @@ const RegisterForm =  ({ setRegisterFormOpen }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const nickname = event.target.nickname.value;
-        console.log(`nickname :${nickname}`);
+        console.log(`nickname :${event.target.nickname.value}`);
 
         try {
             const res = await fetch("/api/users/signUp", {
                 method: "POST",
                 headers: defaultHeaders,
                 body: JSON.stringify({
-                    nickname: nickname
+                    nickname: event.target.nickname.value
                 }),
             });
 

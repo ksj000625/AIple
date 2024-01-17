@@ -22,8 +22,8 @@ import java.util.NoSuchElementException;
 @Slf4j
 public class JwtFilter extends OncePerRequestFilter {
 
-    private final UserDetailsService userDetailsService;
-    private final FirebaseAuth firebaseAuth;
+    private UserDetailsService userDetailsService;
+    private FirebaseAuth firebaseAuth;
 
     public JwtFilter(UserDetailsService userDetailsService, FirebaseAuth firebaseAuth) {
         this.userDetailsService = userDetailsService;
@@ -34,20 +34,11 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-//        if (request.getHeader("Origin") != null) {
-//            // CORS 응답 설정
-//            response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-//            response.setHeader("Access-Control-Allow-Credentials", "true");
-//            response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-//            response.setHeader("Access-Control-Max-Age", "3600");
-//        }
-
         // get the token from the request
         FirebaseToken decodedToken;
         try{
             String header = RequestUtil.getAuthorizationToken(request.getHeader("Authorization"));
             decodedToken = firebaseAuth.verifyIdToken(header);
-            log.info(decodedToken.getUid());
         } catch (FirebaseAuthException | IllegalArgumentException e) {
             // ErrorMessage 응답 전송
             response.setStatus(HttpStatus.SC_UNAUTHORIZED);
@@ -58,7 +49,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // User 를 가져와 SecurityContext 에 저장한다.
         try{
-            // 여기가 문제임 ㅋㅋㅋ
             UserDetails user = userDetailsService.loadUserByUsername(decodedToken.getUid());
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     user, null, user.getAuthorities());

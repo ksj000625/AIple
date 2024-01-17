@@ -13,10 +13,10 @@ export const AuthProvider = ({ children }) => {
             if(firebaseUser) {
                 const token = await firebaseUser.getIdToken();
                 defaultHeaders.Authorization = `Bearer ${token}`;
-                console.log(defaultHeaders);
+                console.log(defaultHeaders.Authorization);
                 const res = await fetch("/api/users/me", {
                     method: "GET",
-                    headers: defaultHeaders,
+                    headers: defaultHeaders
                 });
                 if(res.status === 200) {
                     const user = await res.json();

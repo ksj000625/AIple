@@ -31,8 +31,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-//                .cors(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable);
+
         http.authorizeRequests()
                 .anyRequest()
                 .authenticated();
@@ -55,7 +56,7 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-                .requestMatchers("/api/users")
+                .requestMatchers("/api/users/**")
                 .requestMatchers("/")
                 .requestMatchers("/resources/**");
     }

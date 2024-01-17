@@ -15,8 +15,12 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class CustomUserService implements UserDetailsService {
-    @Autowired
-    UserRepository userRepository;
+//    @Autowired
+    private final UserRepository userRepository;
+
+    public CustomUserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

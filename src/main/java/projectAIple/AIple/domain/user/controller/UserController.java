@@ -21,10 +21,15 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/users")
 public class UserController {
 
+    private final FirebaseAuth firebaseAuth;
+
+    private final CustomUserService customUserDetailsService;
+
     @Autowired
-    FirebaseAuth firebaseAuth;
-    @Autowired
-    private CustomUserService customUserDetailsService;
+    public UserController(CustomUserService customUserDetailsService, FirebaseAuth firebaseAuth) {
+        this.customUserDetailsService = customUserDetailsService;
+        this.firebaseAuth = firebaseAuth;
+    }
 
     @PostMapping("/signUp")
     public UserInfo register(@RequestHeader("Authorization") String authorization,
@@ -40,16 +45,36 @@ public class UserController {
                     "{\"code\":\"INVALID_TOKEN\", \"message\":\"" + e.getMessage() + "\"}");
         }
         // 사용자를 등록한다.
-        log.info("register will be called");
         CustomUser registeredUser = customUserDetailsService.register(
                 decodedToken.getUid(), decodedToken.getEmail(), registerInfo.getNickname());
         return new UserInfo(registeredUser);
     }
 
     @GetMapping("/me")
-    public UserInfo getUserMe(Authentication authentication) {
+    public UserInfo getUserMe(@RequestHeader("Authorization") String authorization) {
         log.info("getUserMe다 이것들아");
-        CustomUser customUser = ((CustomUser) authentication.getPrincipal());
+        // TOKEN을 가져온다.
+        FirebaseToken decodedToken;
+
+        try {
+            String token = RequestUtil.getAuthorizationToken(authorization);
+            decodedToken = firebaseAuth.verifyIdToken(token);
+        } catch (IllegalArgumentException | FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+                    "{\"code\":\"INVALID_TOKEN\", \"message\":\"" + e.getMessage() + "\"}");
+        }
+        // 사용자를 등록한다.
+
+        CustomUser customUser = new CustomUser();
+        customUser.setUsername(decodedToken.getUid());
+        customUser.setEmail(decodedToken.getEmail());
+
+        log.info(String.valueOf(new UserInfo(customUser)));
+
+//        CustomUser customUser = customUserDetailsService.register(
+//                decodedToken.getUid(), decodedToken.getEmail(), "김성진");
+
+//        CustomUser customUser = ((CustomUser) authentication.getPrincipal());
         return new UserInfo(customUser);
     }
 }
