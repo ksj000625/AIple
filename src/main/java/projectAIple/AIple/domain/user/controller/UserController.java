@@ -36,7 +36,7 @@ public class UserController {
                              @RequestBody RegisterInfo registerInfo) {
         // TOKEN을 가져온다.
         FirebaseToken decodedToken;
-        log.info("이거 테스트SignUp");
+
         try {
             String token = RequestUtil.getAuthorizationToken(authorization);
             decodedToken = firebaseAuth.verifyIdToken(token);
@@ -52,7 +52,6 @@ public class UserController {
 
     @GetMapping("/me")
     public UserInfo getUserMe(@RequestHeader("Authorization") String authorization) {
-        log.info("getUserMe다 이것들아");
         // TOKEN을 가져온다.
         FirebaseToken decodedToken;
 
@@ -68,6 +67,7 @@ public class UserController {
         CustomUser customUser = new CustomUser();
         customUser.setUsername(decodedToken.getUid());
         customUser.setEmail(decodedToken.getEmail());
+        customUser.setNickname(decodedToken.getName());
 
         log.info(String.valueOf(new UserInfo(customUser)));
 

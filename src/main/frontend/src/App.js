@@ -5,6 +5,7 @@ import './index.css';
 
 function App() {
 	const { user }  = useContext(UserContext);
+
 	return (
 		<div>
 			{user ? ( <div className='main'> <p>{user.nickname} <br/> {user.email} </p> </div> ) :
