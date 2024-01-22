@@ -4,9 +4,11 @@ import {faStarOfLife} from "@fortawesome/free-solid-svg-icons";
 import {useForm} from "react-hook-form";
 import "../styles/Form.css";
 import axios from "axios";
+import {defaultHeaders} from "../config/clientConfig";
+
+export const UserContext = React.createContext( null );
 
 export default function ClientSignup() {
-
     const [profileImage, setProfileImage] = useState(null);
 
     const {
@@ -59,9 +61,13 @@ export default function ClientSignup() {
                                 // await new Promise((r) => setTimeout(r, 1000));
                                 alert(JSON.stringify(data));
                                 axios
-                                    .post("/api/user/signUpUser", JSON.stringify(data))
+                                    .post("/api/users/signUpEmail",
+                                        data
+                                    )
                                     .then(() => console.log(data))
-                                    .catch(err => console.log(err));
+                                    .catch(err => {
+                                        console.log(err);
+                                    });
                             })}>
                             <div className="form-title-container">
                                 <div className="title">기본 회원 정보</div>

@@ -22,14 +22,13 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/users")
 public class UserController {
 
-    private final FirebaseAuth firebaseAuth;
+    private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
 
     private final CustomUserService customUserDetailsService;
 
     @Autowired
-    public UserController(CustomUserService customUserDetailsService, FirebaseAuth firebaseAuth) {
+    public UserController(CustomUserService customUserDetailsService) {
         this.customUserDetailsService = customUserDetailsService;
-        this.firebaseAuth = firebaseAuth;
     }
 
     @PostMapping("/signUpGoogle")
