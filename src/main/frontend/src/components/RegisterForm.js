@@ -11,7 +11,7 @@ const RegisterForm =  ({ setRegisterFormOpen }) => {
         console.log(`nickname :${event.target.nickname.value}`);
 
         try {
-            const res = await fetch("/api/users/signUp", {
+            const res = await fetch("/api/users/signUpGoogle", {
                 method: "POST",
                 headers: defaultHeaders,
                 body: JSON.stringify({

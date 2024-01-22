@@ -3,9 +3,10 @@ package projectAIple.AIple.domain.user.controller;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
+import com.google.firebase.auth.UserRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import projectAIple.AIple.domain.user.model.CustomUser;
@@ -31,7 +32,7 @@ public class UserController {
         this.firebaseAuth = firebaseAuth;
     }
 
-    @PostMapping("/signUp")
+    @PostMapping("/signUpGoogle")
     public UserInfo register(@RequestHeader("Authorization") String authorization,
                              @RequestBody RegisterInfo registerInfo) {
         // TOKEN을 가져온다.
@@ -48,6 +49,27 @@ public class UserController {
         CustomUser registeredUser = customUserDetailsService.register(
                 decodedToken.getUid(), decodedToken.getEmail(), registerInfo.getNickname());
         return new UserInfo(registeredUser);
+    }
+
+    @PostMapping("/signUpEmail")
+    public void register(
+            @RequestBody RegisterInfo request
+    ) throws FirebaseAuthException {
+        String email = request.getEmail();
+        String password = request.getPassword();
+        String nickname = request.getNickname();
+
+        UserRecord.CreateRequest record = new UserRecord.CreateRequest()
+                .setEmail(email)
+                .setPassword(password)
+                .setDisplayName(nickname)
+                // 필요에 따라 다른 속성 설정
+                ;
+
+        UserRecord user = firebaseAuth.createUser(record);
+
+        log.info(String.valueOf(user));
+        // return new UserInfo(user);
     }
 
     @GetMapping("/me")
@@ -70,9 +92,6 @@ public class UserController {
         customUser.setNickname(decodedToken.getName());
 
         log.info(String.valueOf(new UserInfo(customUser)));
-
-//        CustomUser customUser = customUserDetailsService.register(
-//                decodedToken.getUid(), decodedToken.getEmail(), "김성진");
 
 //        CustomUser customUser = ((CustomUser) authentication.getPrincipal());
         return new UserInfo(customUser);

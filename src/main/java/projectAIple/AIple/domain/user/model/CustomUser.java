@@ -19,10 +19,7 @@ public class CustomUser implements UserDetails {
     private String nickname;
 
     @Builder
-    public CustomUser(String username, String email, String nickname) {
-        this.username = username;
-        this.email = email;
-        this.nickname = nickname;
+    public CustomUser(String username, String email, String nickname, String password) {
     }
 
     public CustomUser() {
