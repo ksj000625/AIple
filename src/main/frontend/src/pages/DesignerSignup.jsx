@@ -56,7 +56,7 @@ export default function DesignerSignup() {
                                     // await new Promise((r) => setTimeout(r, 1000));
                                     alert(JSON.stringify(data));
                                     axios
-                                        .post("/api/user/signUpUser", JSON.stringify(data))
+                                        .post("/api/users/signUpEmail/Designer", data)
                                         .then(() => console.log(data))
                                         .catch(err => console.log(err));
                                 })}>
@@ -239,18 +239,19 @@ export default function DesignerSignup() {
                                             type="text"
                                             id="phoneNumber"
                                             name="phoneNumber"
-                                            placeholder="ex.01012345678"
+                                            placeholder="ex.+821012345678"
                                             aria-invalid={isSubmitted
                                                 ? errors.phoneNumber
                                                     ? "true"
                                                     : "false"
                                                 : undefined}
-                                            {...register("phoneNumber", {                                                
-                                                pattern: {
-                                                value: /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/,
-                                                message: "휴대폰 번호 형식에 맞지 않습니다.",
-                                                },
-                                            })}/>{" "}
+                                            {...register("phoneNumber", {
+                                                // pattern: {
+                                                // value: /^01(?:0|1|[6-9])(?:\d{3}|\d{4})\d{4}$/,
+                                                // message: "휴대폰 번호 형식에 맞지 않습니다.",
+                                                // },
+                                            })}
+                                        />{" "}
                                         {
                                             errors.phoneNumber && (
                                                 <small className="error-message" role="alert">{errors.phoneNumber.message}</small>

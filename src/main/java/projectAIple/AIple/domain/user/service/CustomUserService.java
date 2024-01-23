@@ -40,16 +40,4 @@ public class CustomUserService implements UserDetailsService {
         userRepository.save(customUser);
         return customUser;
     }
-
-    @Transactional
-    public CustomUser register(String uid, String email, String nickname, String password) {
-        CustomUser customUser = CustomUser.builder()
-                .username(uid)
-                .email(email)
-                .nickname(nickname)
-                .password(password)
-                .build();
-        userRepository.save(customUser);
-        return customUser;
-    }
 }

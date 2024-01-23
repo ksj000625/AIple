@@ -4,9 +4,6 @@ import {faStarOfLife} from "@fortawesome/free-solid-svg-icons";
 import {useForm} from "react-hook-form";
 import "../styles/Form.css";
 import axios from "axios";
-import {defaultHeaders} from "../config/clientConfig";
-
-export const UserContext = React.createContext( null );
 
 export default function ClientSignup() {
     const [profileImage, setProfileImage] = useState(null);
@@ -61,7 +58,7 @@ export default function ClientSignup() {
                                 // await new Promise((r) => setTimeout(r, 1000));
                                 alert(JSON.stringify(data));
                                 axios
-                                    .post("/api/users/signUpEmail",
+                                    .post("/api/users/signUpEmail/Client",
                                         data
                                     )
                                     .then(() => console.log(data))
