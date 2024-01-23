@@ -1,13 +1,14 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Link, useRouteMatch, Routes, useParams } from "react-router-dom";
+import CategoryPage from "../pages/CategoryPages"
 
 export default function Main() {
     return (
-        <div className="main">
-            <div className="main">
-                <div className="inner">
-                    살펴보기 페이지
-                </div>
-            </div>
+        <div>
+            <Routes>
+                <Route path="/" element={<CategoryPage/>} />
+                <Route path=":categoryName" element={<CategoryPage/>}/>                
+            </Routes>      
         </div>
     )
 }

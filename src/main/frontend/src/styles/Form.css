@@ -12,6 +12,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-bottom: 20px;
     margin-bottom: 50px;
     border-bottom: #CFCFCF solid 1px;
 }
@@ -36,19 +37,13 @@
     justify-content: space-between;
 }
 
-.email-form > input,
-select {
-    width: 30%;
-
-}
 .form-label-container {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
 }
 
-input,
-select {
+.form-group > input {
     padding: 5px;
     height: 2.7rem;
     border: 1px solid #CFCFCF;
@@ -57,14 +52,9 @@ select {
     font-size: 0.8rem;
 }
 
-input:focus,
-select:focus {
+.form-group > input:focus {
     border: #8220FF 1px solid;
     outline: none;
-}
-
-input::placeholder {
-    font-size: 0.8rem;
 }
 
 .error-message {
