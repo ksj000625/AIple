@@ -14,6 +14,7 @@ import Main from "./pages/Main";
 import CategoryBar from "./components/CategoryBar";
 import axios from "axios";
 
+
 function MainRoutes() {
     return (
         <div>

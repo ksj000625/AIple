@@ -54,6 +54,7 @@ p {
 	color: #fff;
 	font-size: 0.8rem;
 	font-weight: bold;
+	margin-top: 10px;
 }
 
 .button:hover {
@@ -138,5 +139,16 @@ p {
 
 .min {
 	font-size: 0.8rem;
+}
+
+.google-button {
+    height: 40px;
+    margin-left: 10px;
+	border:none;
+	border-radius: 10px;
+}
+
+.google-button:hover {
+	background-color: #CFCFCF;
 }
 

@@ -1,10 +1,24 @@
-import { useContext } from "react";
-import { UserContext } from "./AuthProvider";
-import { defaultHeaders } from "../config/clientConfig";
+import {useContext} from "react";
+import {useForm} from "react-hook-form";
+import {UserContext} from "./AuthProvider";
+import {defaultHeaders} from "../config/clientConfig";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faStarOfLife} from "@fortawesome/free-solid-svg-icons";
+
 import '../index.css';
 
-const RegisterForm =  ({ setRegisterFormOpen }) => {
-    const { setUser } = useContext(UserContext);
+const RegisterForm = ({setRegisterFormOpen}) => {
+    const {
+        register,
+        formState: {
+            isSubmitted,
+            isSubmitting,
+            isValid,
+            errors
+        }
+    } = useForm({mode: "onChange"});
+
+    const {setUser} = useContext(UserContext);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -14,9 +28,7 @@ const RegisterForm =  ({ setRegisterFormOpen }) => {
             const res = await fetch("/api/users/signUpGoogle", {
                 method: "POST",
                 headers: defaultHeaders,
-                body: JSON.stringify({
-                    nickname: event.target.nickname.value
-                }),
+                body: JSON.stringify({nickname: event.target.nickname.value})
             });
 
             if (!res.ok) {
@@ -31,16 +43,51 @@ const RegisterForm =  ({ setRegisterFormOpen }) => {
             console.error("회원가입 실패:", error);
             // 사용자에게 에러 메시지 표시
         }
+
     };
 
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <label className='nickname'>
-                    Enter your nickname
-                </label>
-                <input className='nickname' type="text" name="nickname" />
-                <input className='signup' type="submit" value="Sign up" />
+                <div className="form-group">
+                    <div className="form-label-container">
+                        <label>닉네임</label>
+                        <FontAwesomeIcon
+                            icon={faStarOfLife}
+                            size="2xs"
+                            style={{
+                                color: "#fe3939"
+                            }}/>
+                    </div>
+                    <input
+                        type="text"
+                        id="nickname"
+                        name="nickname"
+                        placeholder="ex.에이플"
+                        aria-invalid={isSubmitted
+                            ? errors.nickname
+                                ? "true"
+                                : "false"
+                            : undefined}
+                        {...register("nickname", {
+                                            required: "닉네임을 입력해주세요.",
+                                            minLength: {
+                                            value: 2,
+                                            message: "두 자리 이상 입력해주세요.",
+                                            },
+                                        })}/>{" "}
+                    {errors.nickname && (<small role="alert">{errors.nickname.message}</small>)}
+                </div>
+                <input
+                    className='submit-button'
+                    type="submit"
+                    value="Sign up"
+                    disabled={isSubmitting && !isValid}
+                    style={{
+                        backgroundColor: isValid
+                            ? "#8220FF"
+                            : "#CFCFCF"
+                    }}/>
             </form>
         </div>
     );

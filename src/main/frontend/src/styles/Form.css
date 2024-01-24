@@ -98,6 +98,8 @@
     color: #fff;
     font-size: 0.8rem;
     font-weight: bold;
+    margin-top: 10px;
+    cursor: pointer;
 }
 
 .submit-button:disabled {

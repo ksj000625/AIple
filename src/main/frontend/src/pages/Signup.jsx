@@ -1,8 +1,18 @@
-import React from "react";
+import {useState} from "react";
 import { Link } from "react-router-dom";
 import "../styles/ImgButton.css"
+import RegisterForm from "../components/RegisterForm";
+import Modal from 'react-modal';
+import "../styles/Modal.css"
+
 
 export default function Signup() {
+    let [modal, setModal] = useState(false);
+
+    const openModal = () => setModal(true);
+    const closeModal = () => setModal(false);
+
+    
     return (
         <div className="signup">
             {/* <header>header</header> */}
@@ -32,6 +42,8 @@ export default function Signup() {
                                 <div className="desc">이미 가입하셨다면</div>
                                 <button className="login-button button">로그인</button>
                             </div>
+                            <button className="google-button" onClick={openModal}>Google 계정으로 가입</button>
+                            <Modal className="modal" isOpen={modal} onRequestClose={closeModal}><RegisterForm/></Modal>
                         </div>
                     </div>
                 </div>
