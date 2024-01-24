@@ -21,8 +21,28 @@ a:hover {
 	text-decoration: none;
 }
 
+a:hover {
+	cursor: pointer;
+}
+
+input::placeholder {
+    font-size: 0.8rem;
+}
+
+select:focus {
+    outline: none;
+}
+
 button:hover {
 	cursor: pointer;
+}
+
+h3 {
+	margin: 0;
+}
+
+p {
+	margin: 0;
 }
 
 .button {
@@ -107,7 +127,7 @@ button:hover {
 .login-button-container {
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	align-items: baseline;
 }
 
 .login-button {
@@ -119,3 +139,4 @@ button:hover {
 .min {
 	font-size: 0.8rem;
 }
+
