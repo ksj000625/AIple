@@ -201,8 +201,8 @@ export default function DesignerSignup() {
                                 <div className="form-title-container">
                                     <div className="title">디자이너 정보</div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group">
+                                <div className="form-row">
+                                    <div className="form-group">
                                         <div className="form-label-container">
                                             <label>업무용 이메일</label>
                                         </div>
@@ -231,7 +231,7 @@ export default function DesignerSignup() {
                                         }
                                         <div className="desc min">로그인 시 사용하는 이메일이 아닌 업무용 이메일을 등록해주세요.</div>
                                     </div>
-                                    <div class="form-group">
+                                    <div className="form-group">
                                         <div className="form-label-container">
                                             <label for="phone">휴대폰 번호</label>
                                         </div>
@@ -259,8 +259,8 @@ export default function DesignerSignup() {
                                         }
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group">
+                                <div className="form-row">
+                                    <div className="form-group">
                                         <div className="form-label-container">
                                             <label for="name">이름</label>
                                         </div>
@@ -282,7 +282,7 @@ export default function DesignerSignup() {
                                             })}/>{" "}
                                         {errors.name && (<small className="error-message" role="alert">{errors.name.message}</small>)}
                                     </div>
-                                    <div class="form-group">
+                                    <div className="form-group">
                                         <div className="form-label-container">
                                             <label>소속</label>
                                         </div>
