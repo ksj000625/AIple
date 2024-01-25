@@ -13,7 +13,6 @@ import DesignerSignup from "./pages/DesignerSignup";
 import Header from "./components/Header";
 import Category from "./components/Category";
 import Footer from "./components/Footer";
-import Searchbar from "./components/Searchbar";
 
 function App() {
 
