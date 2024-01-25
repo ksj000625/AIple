@@ -39,6 +39,9 @@ public class UserController {
         // TOKEN을 가져온다.
         FirebaseToken decodedToken;
 
+        log.info(authorization);
+        log.info(registerInfo.getNickname());
+
         try {
             String token = RequestUtil.getAuthorizationToken(authorization);
             decodedToken = firebaseAuth.verifyIdToken(token);

@@ -6,6 +6,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStarOfLife} from "@fortawesome/free-solid-svg-icons";
 
 import '../index.css';
+import {signInGoogle} from "../auth/firebaseAuth";
+import {getAuth, updateProfile} from "firebase/auth";
 
 const RegisterForm = ({setRegisterFormOpen}) => {
     const {
@@ -18,31 +20,33 @@ const RegisterForm = ({setRegisterFormOpen}) => {
         }
     } = useForm({mode: "onChange"});
 
-    const {setUser} = useContext(UserContext);
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log(`nickname :${event.target.nickname.value}`);
-
-        try {
-            const res = await fetch("/api/users/signUpGoogle", {
-                method: "POST",
-                headers: defaultHeaders,
-                body: JSON.stringify({nickname: event.target.nickname.value})
-            });
-
-            if (!res.ok) {
-                throw new Error(`API 요청 실패: ${res.statusText}`);
-            }
-
-            const user = await res.json();
-            console.log(`post /users ${JSON.stringify(user)}`);
-            setRegisterFormOpen(false);
-            setUser(user);
-        } catch (error) {
-            console.error("회원가입 실패:", error);
-            // 사용자에게 에러 메시지 표시
-        }
+        await signInGoogle();
+        const auth = getAuth();
+        await updateProfile(auth.currentUser, {
+            displayName: `${event.target.nickname.value}`
+        })
+        console.log(auth.currentUser.displayName)
+        // try {
+        //     const res = await fetch("/api/users/signUpGoogle", {
+        //         method: "POST",
+        //         headers: defaultHeaders,
+        //         body: JSON.stringify({nickname: event.target.nickname.value})
+        //     });
+        //
+        //     if (!res.ok) {
+        //         throw new Error(`API 요청 실패: ${res.statusText}`);
+        //     }
+        //
+        //     const user = await res.json();
+        //     console.log(`post /users ${JSON.stringify(user)}`);
+        //     setRegisterFormOpen(false);
+        // } catch (error) {
+        //     console.error("회원가입 실패:", error);
+        //     // 사용자에게 에러 메시지 표시
+        // }
 
     };
 

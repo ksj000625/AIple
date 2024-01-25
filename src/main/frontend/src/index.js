@@ -8,11 +8,11 @@ import { AuthProvider } from './components/AuthProvider';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <React.StrictMode>
+  <React.Suspense>
       <AuthProvider>
           <App />
       </AuthProvider>
-  </React.StrictMode>
+  </React.Suspense>
 );
 
 
