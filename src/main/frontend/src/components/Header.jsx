@@ -1,34 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/Header.css"
+import "../App.css"
 
-export default function Header() {
-    return (
-        <div className="header-container">
-            <div className="header-wrap">
-                <div className="header-left-wrap">
-                    <Link className="logo" to='/'>
-                        Home
-                    </Link>
+const Header=()=>{
+    return(
+        <header className="header">
+            <div className="content">
+                <div>
+                    로고 자리
                 </div>
-                <ul>
-                    <li>
-                        <Link className="header-nav-item" to="/signup">
-                            가입
-                        </Link>
-                    </li>
-                    <li>
-                        <Link className="header-nav-item" to="/signup/client">
-                            고객 가입
-                        </Link>
-                    </li>
-                    <li>
-                        <Link className="header-nav-item" to="/signup/designer">
-                            디자이너 가입
-                        </Link>
-                    </li>
-                </ul>
+
+                <nav className="navigation">
+                    <ul>
+                        <li>
+                            알림
+                        </li>
+                        <li className="login">
+                            로그인
+                        </li>
+                        <li>
+                            회원가입
+                        </li>
+                    </ul>
+                </nav>
             </div>
-        </div>
+        </header>
     )
 }
+
+export  default Header

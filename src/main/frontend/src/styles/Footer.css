@@ -1,0 +1,26 @@
+/*.footer.wrap{*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    flex: 1;*/
+/*}*/
+.wrap-container {
+    height: auto;
+    min-height: 100%;
+    padding-bottom: 60px;
+}
+
+
+
+footer{
+    height: 80px;
+    position: relative;
+    transform: translateY(0%);
+    border-top: 1px solid #248efe;
+    z-index: 1000;
+
+    display: flex;
+    /*align-items: center;이미지 가운데 정렬하는 */
+    /*justify-content: center;*/
+    margin-top: auto;
+    background-color: rgb(214, 214, 214);
+}
