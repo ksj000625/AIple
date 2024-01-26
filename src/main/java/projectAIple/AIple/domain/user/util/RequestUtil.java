@@ -1,4 +1,4 @@
-package projectAIple.AIple.util;
+package projectAIple.AIple.domain.user.util;
 
 import jakarta.servlet.http.HttpServletRequest;
 

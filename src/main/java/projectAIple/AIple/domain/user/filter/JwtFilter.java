@@ -1,4 +1,4 @@
-package projectAIple.AIple.filter;
+package projectAIple.AIple.domain.user.filter;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -14,7 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.OncePerRequestFilter;
-import projectAIple.AIple.util.RequestUtil;
+import projectAIple.AIple.domain.user.util.RequestUtil;
 
 import java.io.IOException;
 import java.util.NoSuchElementException;

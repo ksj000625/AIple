@@ -1,4 +1,4 @@
-package projectAIple.AIple.message.request;
+package projectAIple.AIple.domain.user.message.request;
 
 import lombok.Data;
 

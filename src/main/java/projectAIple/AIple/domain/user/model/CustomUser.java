@@ -17,6 +17,8 @@ public class CustomUser implements UserDetails {
     private String email;
     @Column
     private String nickname;
+    @Column
+    private String profileImage;
 
     @Builder
     public CustomUser(String username, String email, String nickname, String password) {
@@ -64,5 +66,9 @@ public class CustomUser implements UserDetails {
     public boolean isEnabled() {
         // TODO Auto-generated method stub
         return false;
+    }
+
+    public void updateProfile(String s) {
+        this.setProfileImage(s);
     }
 }

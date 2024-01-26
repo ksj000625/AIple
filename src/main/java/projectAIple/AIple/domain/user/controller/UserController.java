@@ -6,17 +6,20 @@ import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.UserRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import projectAIple.AIple.domain.user.model.CustomUser;
 import projectAIple.AIple.domain.user.service.CustomUserService;
-import projectAIple.AIple.message.request.DesignerRegInfo;
-import projectAIple.AIple.message.request.RegisterInfo;
-import projectAIple.AIple.message.response.UserInfo;
-import projectAIple.AIple.util.RequestUtil;
+import projectAIple.AIple.domain.user.message.request.DesignerRegInfo;
+import projectAIple.AIple.domain.user.message.request.RegisterInfo;
+import projectAIple.AIple.domain.user.message.response.UserInfo;
+import projectAIple.AIple.domain.user.util.RequestUtil;
 
 import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
 
 @Slf4j
 @RestController
@@ -73,6 +76,7 @@ public class UserController {
         UserRecord user = firebaseAuth.createUser(record);
 
         log.info(String.valueOf(user));
+
         // return new UserInfo(user);
     }
 
@@ -125,5 +129,18 @@ public class UserController {
 
 //        CustomUser customUser = ((CustomUser) authentication.getPrincipal());
         return new UserInfo(customUser);
+    }
+
+    @PostMapping("/me/profileImage")
+    public CustomUser updateProfile(@RequestBody MultipartFile image,
+                                    Authentication authentication) throws IOException {
+        CustomUser user = (CustomUser) authentication.getPrincipal();
+        log.info("user: {}", user);
+        return customUserDetailsService.updateProfile(user, image.getBytes());
+    }
+
+    @GetMapping("/users/{uid}/profile")
+    public byte[] downloadProfile(@PathVariable String uid) {
+        return customUserDetailsService.getProfile(uid);
     }
 }

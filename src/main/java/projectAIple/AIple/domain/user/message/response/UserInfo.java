@@ -1,4 +1,4 @@
-package projectAIple.AIple.message.response;
+package projectAIple.AIple.domain.user.message.response;
 
 import lombok.Data;
 import projectAIple.AIple.domain.user.model.CustomUser;

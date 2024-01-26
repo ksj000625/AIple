@@ -1,4 +1,4 @@
-package projectAIple.AIple.exceptions;
+package projectAIple.AIple.domain.user.exceptions;
 
 public class AuthException extends Exception {
     private static final long serialVersionUID = 1L;
