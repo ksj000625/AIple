@@ -45,8 +45,8 @@
 }
 .nav .detailMenu ul{
     width: 200px;
-    margin: auto;
-    justify-content: space-around;
+    margin: 0;
+    justify-content: flex-start;
     padding: 0;
 }
 
