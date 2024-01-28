@@ -55,9 +55,26 @@ export default function DesignerSignup() {
                                 onSubmit={handleSubmit(async (data) => {
                                     // await new Promise((r) => setTimeout(r, 1000));
                                     alert(JSON.stringify(data));
-                                    axios
+                                    let id;
+                                    await axios
                                         .post("/api/users/signUpEmail/Designer", data)
-                                        .then(() => console.log(data))
+                                        .then((res) => {
+                                            console.log(data);
+                                            id = res.data;
+                                        })
+                                        .catch(err => console.log(err));
+                                    const newData = {
+                                        id: id,
+                                        email: data.email,
+                                        name: data.name,
+                                        team: data.team,
+                                        businessEmail: data.businessEmail,
+                                        phoneNumber: data.phoneNumber
+                                    }
+                                    alert(JSON.stringify(newData));
+                                    await axios
+                                        .post("/api/users/designer/addDesigner", newData)
+                                        .then(res => console.log(res))
                                         .catch(err => console.log(err));
                                 })}>
                                 <div className="form-title-container">

@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class DesignerRegInfo {
+    private String id;
     private String email;
     private String password;
     private String name;

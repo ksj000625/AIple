@@ -81,7 +81,7 @@ public class UserController {
     }
 
     @PostMapping("/signUpEmail/Designer")
-    public void register(
+    public String register(
             @RequestBody DesignerRegInfo request
     ) throws FirebaseAuthException {
         String email = request.getEmail();
@@ -103,7 +103,7 @@ public class UserController {
         UserRecord user = firebaseAuth.createUser(record);
 
         log.info(user.getUid());
-        // return new UserInfo(user);
+        return user.getUid();
     }
 
     @GetMapping("/me")
