@@ -43,11 +43,9 @@ export default function Header(){
                                         ref={detectingAlarmRef}
                                         className="BellWindow">
                                             <h5>알림 창</h5>
-                                            <li>알림 내용</li>
                                     </ul>
                                 )}
                             </ul>
-                            {/*<FaBell className="Bell" size="18" color="gold"/>*/}
                         </li>
                         <li className="login">
                             로그인
