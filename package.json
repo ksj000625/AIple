@@ -4,6 +4,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.5",
     "@mui/material": "^5.15.5",
-    "styled-components": "^6.1.8"
+    "styled-components": "^6.1.8",
+    "styles": "^0.2.1"
   }
 }

@@ -19,7 +19,6 @@ function App() {
 	return (
 		<BrowserRouter>
 			<Header />
-			{/*<Searchbar/>*/}
 			<Category />
 			<div className="wrap-container">
 				<div className="main-container">
