@@ -22,11 +22,13 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Autowired
-    private CustomUserService userDetailsService;
+    private final CustomUserService userDetailsService;
+    private final FirebaseAuth firebaseAuth;
 
-    @Autowired
-    private FirebaseAuth firebaseAuth;
+    public SecurityConfig(CustomUserService userDetailsService, FirebaseAuth firebaseAuth) {
+        this.userDetailsService = userDetailsService;
+        this.firebaseAuth = firebaseAuth;
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -57,7 +59,6 @@ public class SecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
                 .requestMatchers("/api/users/**")
-                .requestMatchers("/api/users/signUpEmail/**")
                 .requestMatchers("/")
                 .requestMatchers("/resources/**");
     }

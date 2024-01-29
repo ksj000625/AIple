@@ -7,6 +7,7 @@ import com.google.firebase.auth.UserRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -39,19 +40,8 @@ public class UserController {
     @PostMapping("/signUpGoogle")
     public UserInfo register(@RequestHeader("Authorization") String authorization,
                              @RequestBody RegisterInfo registerInfo) {
-        // TOKEN을 가져온다.
-        FirebaseToken decodedToken;
+        FirebaseToken decodedToken = getDecodedToken(authorization);
 
-        log.info(authorization);
-        log.info(registerInfo.getNickname());
-
-        try {
-            String token = RequestUtil.getAuthorizationToken(authorization);
-            decodedToken = firebaseAuth.verifyIdToken(token);
-        } catch (IllegalArgumentException | FirebaseAuthException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
-                    "{\"code\":\"INVALID_TOKEN\", \"message\":\"" + e.getMessage() + "\"}");
-        }
         // 사용자를 등록한다.
         CustomUser registeredUser = customUserDetailsService.register(
                 decodedToken.getUid(), decodedToken.getEmail(), registerInfo.getNickname());
@@ -108,16 +98,7 @@ public class UserController {
 
     @GetMapping("/me")
     public UserInfo getUserMe(@RequestHeader("Authorization") String authorization) {
-        // TOKEN을 가져온다.
-        FirebaseToken decodedToken;
-
-        try {
-            String token = RequestUtil.getAuthorizationToken(authorization);
-            decodedToken = firebaseAuth.verifyIdToken(token);
-        } catch (IllegalArgumentException | FirebaseAuthException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
-                    "{\"code\":\"INVALID_TOKEN\", \"message\":\"" + e.getMessage() + "\"}");
-        }
+        FirebaseToken decodedToken = getDecodedToken(authorization);
         // 사용자를 등록한다.
 
         CustomUser customUser = new CustomUser();
@@ -133,14 +114,39 @@ public class UserController {
 
     @PostMapping("/me/profileImage")
     public CustomUser updateProfile(@RequestBody MultipartFile image,
-                                    Authentication authentication) throws IOException {
-        CustomUser user = (CustomUser) authentication.getPrincipal();
+                                    @RequestHeader("Authorization") String authorization) throws IOException {
+        FirebaseToken decodedToken = getDecodedToken(authorization);
+
+        CustomUser user = new CustomUser();
+        user.setUsername(decodedToken.getUid());
+        user.setEmail(decodedToken.getEmail());
+        user.setNickname(decodedToken.getName());
+
+        // CustomUser user = (CustomUser) authentication.getPrincipal();
         log.info("user: {}", user);
+        log.info(String.valueOf(image));
+
         return customUserDetailsService.updateProfile(user, image.getBytes());
     }
 
     @GetMapping("/users/{uid}/profile")
     public byte[] downloadProfile(@PathVariable String uid) {
         return customUserDetailsService.getProfile(uid);
+    }
+
+    // firebaseToken 가져오기
+    public FirebaseToken getDecodedToken(String authorization) {
+        // TOKEN을 가져온다.
+        FirebaseToken decodedToken;
+
+        try {
+            String token = RequestUtil.getAuthorizationToken(authorization);
+            decodedToken = firebaseAuth.verifyIdToken(token);
+        } catch (IllegalArgumentException | FirebaseAuthException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+                    "{\"code\":\"INVALID_TOKEN\", \"message\":\"" + e.getMessage() + "\"}");
+        }
+
+        return decodedToken;
     }
 }

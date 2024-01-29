@@ -22,8 +22,8 @@ import java.util.NoSuchElementException;
 @Slf4j
 public class JwtFilter extends OncePerRequestFilter {
 
-    private UserDetailsService userDetailsService;
-    private FirebaseAuth firebaseAuth;
+    private final UserDetailsService userDetailsService;
+    private final FirebaseAuth firebaseAuth;
 
     public JwtFilter(UserDetailsService userDetailsService, FirebaseAuth firebaseAuth) {
         this.userDetailsService = userDetailsService;
@@ -50,6 +50,7 @@ public class JwtFilter extends OncePerRequestFilter {
         // User 를 가져와 SecurityContext 에 저장한다.
         try{
             UserDetails user = userDetailsService.loadUserByUsername(decodedToken.getUid());
+            log.info("개씨발진짜"+ user);
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
