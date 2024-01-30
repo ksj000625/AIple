@@ -1,12 +1,41 @@
-import React, {useState, useRef} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStarOfLife} from "@fortawesome/free-solid-svg-icons";
 import {useForm} from "react-hook-form";
 import "../styles/Form.css";
 import axios from "axios";
+import {auth} from "../auth/firebaseAuth";
+import {defaultHeaders} from "../config/clientConfig";
+import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
 
 export default function DesignerSignup() {
     const [profileImage, setProfileImage] = useState(null);
+
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        auth.onAuthStateChanged(async (firebaseUser) => {
+            if(firebaseUser) {
+                const token = await firebaseUser.getIdToken();
+                defaultHeaders.Authorization = `Bearer ${token}`;
+
+                const res = await fetch("/api/users/me", {
+                    method: "GET",
+                    headers: defaultHeaders
+                });
+                if(res.status === 200) {
+                    const user = await res.json();
+                    console.log(`user: ${user}`);
+                    setUser(user);
+                } else if (res.status === 401) {
+                    const data = await res.json();
+                    console.log(`400 Error: ${data}`);
+                }
+            } else {
+                delete defaultHeaders.Authorization;
+            }
+        });
+    }, []);
 
     const {
         register,
@@ -41,6 +70,35 @@ export default function DesignerSignup() {
             .current
             .click();
     };
+
+    async function login(email, password) {
+        const auth = getAuth();
+        await signInWithEmailAndPassword(auth, email, password)
+            .then(userCredential => {
+                const user = userCredential.user;
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+            });
+    }
+
+    async function handleUploadProfileImage() {
+        console.log(defaultHeaders.Authorization);
+
+        await axios
+            .post("/api/users/me/profileImage",
+                profileImage,
+                {
+                    headers: {
+                        Authorization: defaultHeaders.Authorization
+                    }
+                }
+            )
+            .then(res => console.log(JSON.stringify(res)))
+            .catch(err => console.log(err));
+    }
+
     return (
         <div className="designerSignup">
             <div className="main">
@@ -76,6 +134,9 @@ export default function DesignerSignup() {
                                         .post("/api/users/designer/addDesigner", newData)
                                         .then(res => console.log(res))
                                         .catch(err => console.log(err));
+
+                                    await login(data.email, data.password);
+                                    await handleUploadProfileImage();
                                 })}>
                                 <div className="form-title-container">
                                     <div className="title">기본 회원 정보</div>

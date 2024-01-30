@@ -143,7 +143,7 @@ public class UserController {
         return customUserDetailsService.updateProfile(user, imageBytes);
     }
 
-    @GetMapping("/users/{uid}/profile")
+    @GetMapping("/{uid}/profile")
     public byte[] downloadProfile(@PathVariable String uid) {
         return customUserDetailsService.getProfile(uid);
     }
