@@ -18,7 +18,7 @@ public class CustomUser implements UserDetails {
     @Column
     private String nickname;
     @Column
-    private String profileImage;
+    private String profileImageLocation;
 
     @Builder
     public CustomUser(String username, String email, String nickname, String password) {
@@ -69,6 +69,6 @@ public class CustomUser implements UserDetails {
     }
 
     public void updateProfile(String s) {
-        this.setProfileImage(s);
+        this.setProfileImageLocation(s);
     }
 }

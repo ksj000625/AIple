@@ -7,13 +7,9 @@ import axios from "axios";
 import {auth} from "../auth/firebaseAuth";
 import {defaultHeaders} from "../config/clientConfig";
 import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
-import {type} from "@testing-library/user-event/dist/type";
 
 export default function ClientSignup() {
     const [profileImage, setProfileImage] = useState(null);
-
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
 
     const [user, setUser] = useState(null);
 
@@ -75,7 +71,7 @@ export default function ClientSignup() {
             .click();
     };
 
-    async function login() {
+    async function login(email, password) {
         const auth = getAuth();
         await signInWithEmailAndPassword(auth, email, password)
             .then(userCredential => {
@@ -88,10 +84,6 @@ export default function ClientSignup() {
     }
 
     async function handleUploadProfileImage() {
-        console.log("handleUploadProfileImage!");
-
-        await login();
-
         console.log(defaultHeaders.Authorization);
 
         await axios
@@ -123,10 +115,6 @@ export default function ClientSignup() {
                                 // await new Promise((r) => setTimeout(r, 1000));
                                 alert(JSON.stringify(data));
 
-                                // email, password state 저장
-                                setEmail(data.email);
-                                setPassword(data.password);
-
                                 await axios
                                     .post("/api/users/signUpEmail/Client",
                                         data
@@ -135,6 +123,7 @@ export default function ClientSignup() {
                                     .catch(err => {
                                         console.log(err);
                                     });
+                                await login(data.email, data.password);
                                 await handleUploadProfileImage();
                             })}>
                             <div className="form-title-container">

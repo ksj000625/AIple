@@ -20,7 +20,10 @@ import projectAIple.AIple.domain.user.util.RequestUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 @Slf4j
 @RestController
@@ -113,7 +116,7 @@ public class UserController {
     }
 
     @PostMapping("/me/profileImage")
-    public CustomUser updateProfile(@RequestBody MultipartFile image,
+    public CustomUser updateProfile(@RequestBody String imageURL,
                                     @RequestHeader("Authorization") String authorization) throws IOException {
         FirebaseToken decodedToken = getDecodedToken(authorization);
 
@@ -121,12 +124,23 @@ public class UserController {
         user.setUsername(decodedToken.getUid());
         user.setEmail(decodedToken.getEmail());
         user.setNickname(decodedToken.getName());
+        user.setProfileImageLocation(decodedToken.getPicture());
 
         // CustomUser user = (CustomUser) authentication.getPrincipal();
         log.info("user: {}", user);
-        log.info(String.valueOf(image));
 
-        return customUserDetailsService.updateProfile(user, image.getBytes());
+        imageURL = URLDecoder.decode(imageURL, StandardCharsets.UTF_8);
+
+        log.info(imageURL);
+
+        // Base64 인코딩된 바이너리 데이터를 읽어들입니다.
+        InputStream inputStream = new ByteArrayInputStream(imageURL.split(",")[1].getBytes());
+
+        // 바이너리 데이터를 이미지로 변환합니다.
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        byte[] imageBytes = new byte[reader.readLine().length()];
+
+        return customUserDetailsService.updateProfile(user, imageBytes);
     }
 
     @GetMapping("/users/{uid}/profile")
