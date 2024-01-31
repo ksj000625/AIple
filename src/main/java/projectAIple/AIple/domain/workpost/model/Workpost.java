@@ -2,12 +2,14 @@ package projectAIple.AIple.domain.workpost.model;
 
 import com.google.cloud.Timestamp;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
 @Builder
+@Data
 public class Workpost {
     private String id;
     private String image;
