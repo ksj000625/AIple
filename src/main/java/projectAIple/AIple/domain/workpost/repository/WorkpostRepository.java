@@ -22,7 +22,7 @@ public class WorkpostRepository {
      * 작성되어 있는 외주 게시글을 list 형태로 반환하는 메소드
      * @return 외주 게시글들의 list
      */
-    public List<Workpost> getAllWorkpostsInfo() throws ExecutionException, InterruptedException {
+    public List<Workpost> getAllWorkpostInfo() throws ExecutionException, InterruptedException {
         List<Workpost> list = new ArrayList<>();
         ApiFuture<QuerySnapshot> future = FIRE_STORE.collection(COLLECTION_NAME).get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
@@ -38,7 +38,7 @@ public class WorkpostRepository {
      * @param category 조회하고자 하는 카테고리
      * @return 조회한 카테고리에 포함되는 외주 게시글들의 list
      */
-    public List<Workpost> getCategoryWorkpostsInfo(String category) throws ExecutionException, InterruptedException {
+    public List<Workpost> getCategoryWorkpostInfo(String category) throws ExecutionException, InterruptedException {
         List<Workpost> list = new ArrayList<>();
         Query query = FIRE_STORE.collection(COLLECTION_NAME).whereEqualTo("category", category);
         ApiFuture<QuerySnapshot> future = query.get();
@@ -56,7 +56,7 @@ public class WorkpostRepository {
      * @param title 조회하고자 하는 제목의 일부
      * @return 조회한 제목이 포함되는 외주 게시글들의 list
      */
-    public List<Workpost> findWorkpostsByName(String title) throws ExecutionException, InterruptedException {
+    public List<Workpost> findWorkpostByTitle(String title) throws ExecutionException, InterruptedException {
         List<Workpost> list = new ArrayList<>();
         Query query = FIRE_STORE.collection(COLLECTION_NAME).whereArrayContains("title", title);
         ApiFuture<QuerySnapshot> future = query.get();
@@ -90,9 +90,9 @@ public class WorkpostRepository {
      * 외주 게시글을 수정하는 메소드
      * @param workpost 수정할 외주 게시글 데이터
      */
-    public void editWorkposts(Workpost workpost) {
+    public void editWorkpost(Workpost workpost) {
         Query query = FIRE_STORE.collection(COLLECTION_NAME).whereEqualTo("id", workpost.getId());
-        ApiFuture<QuerySnapshot> querySnapshot = query.get();
+        ApiFuture<QuerySnapshot> future = query.get();
 
         DocumentReference document = null;
         document = FIRE_STORE.collection(COLLECTION_NAME).document();
@@ -119,5 +119,33 @@ public class WorkpostRepository {
         } catch (Exception e) {
             throw new RuntimeException("문서 조회를 실패하였습니다.");
         }
+    }
+
+    /**
+     * 외주 게시글의 좋아요를 누르는 메소드
+     * @param workpost 좋아요를 추가하려는 외주 게시글
+     */
+    public void likeWorkpost(Workpost workpost) {
+        Query query = FIRE_STORE.collection(COLLECTION_NAME).whereEqualTo("id", workpost.getId());
+        ApiFuture<QuerySnapshot> future = query.get();
+
+        DocumentReference document = null;
+        document = FIRE_STORE.collection(COLLECTION_NAME).document();
+        document.set(workpost);
+        document.update("like", workpost.getLike()+1);
+    }
+
+    /**
+     * 외주 게시글의 좋아요를 빼는 메소드
+     * @param workpost 좋아요를 빼려는 외주 게시글
+     */
+    public void dislikeWorkpost(Workpost workpost) {
+        Query query = FIRE_STORE.collection(COLLECTION_NAME).whereEqualTo("id", workpost.getId());
+        ApiFuture<QuerySnapshot> future = query.get();
+
+        DocumentReference document = null;
+        document = FIRE_STORE.collection(COLLECTION_NAME).document();
+        document.set(workpost);
+        document.update("like", workpost.getLike()-1);
     }
 }
