@@ -42,7 +42,7 @@ export default function Header(){
                                     <ul
                                         ref={detectingAlarmRef}
                                         className="BellWindow">
-                                            <h5>알림 창</h5>
+                                            <h4>알림</h4>
                                     </ul>
                                 )}
                             </ul>
