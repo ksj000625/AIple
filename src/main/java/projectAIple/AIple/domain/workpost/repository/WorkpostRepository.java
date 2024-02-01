@@ -15,7 +15,7 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 @Repository
 public class WorkpostRepository {
-    public static final String COLLECTION_NAME = "WORKPOSTS";
+    public static final String COLLECTION_NAME = "WORKPOST";
     private static final Firestore FIRE_STORE = FirestoreClient.getFirestore();
 
     /**
@@ -75,10 +75,9 @@ public class WorkpostRepository {
      */
     public void addWorkpost(Workpost workpost) {
         Query query = FIRE_STORE.collection(COLLECTION_NAME).whereEqualTo("id", workpost.getId());
-        ApiFuture<QuerySnapshot> querySnapshot = query.get();
+        ApiFuture<QuerySnapshot> future = query.get();
 
-        DocumentReference document = null;
-        document = FIRE_STORE.collection(COLLECTION_NAME).document();
+        DocumentReference document = FIRE_STORE.collection(COLLECTION_NAME).document();
         workpost.setId(document.getId());
         document.set(workpost);
         document.update("create_dt", Timestamp.now());
@@ -94,8 +93,7 @@ public class WorkpostRepository {
         Query query = FIRE_STORE.collection(COLLECTION_NAME).whereEqualTo("id", workpost.getId());
         ApiFuture<QuerySnapshot> future = query.get();
 
-        DocumentReference document = null;
-        document = FIRE_STORE.collection(COLLECTION_NAME).document();
+        DocumentReference document = FIRE_STORE.collection(COLLECTION_NAME).document();
         document.set(workpost);
         document.update("update_dt", Timestamp.now());
         log.info("새로운 문서가 추가되었습니다. document ID: {}", document.getId());
@@ -129,8 +127,7 @@ public class WorkpostRepository {
         Query query = FIRE_STORE.collection(COLLECTION_NAME).whereEqualTo("id", workpost.getId());
         ApiFuture<QuerySnapshot> future = query.get();
 
-        DocumentReference document = null;
-        document = FIRE_STORE.collection(COLLECTION_NAME).document();
+        DocumentReference document = FIRE_STORE.collection(COLLECTION_NAME).document();
         document.set(workpost);
         document.update("like", workpost.getLike()+1);
     }
@@ -143,8 +140,7 @@ public class WorkpostRepository {
         Query query = FIRE_STORE.collection(COLLECTION_NAME).whereEqualTo("id", workpost.getId());
         ApiFuture<QuerySnapshot> future = query.get();
 
-        DocumentReference document = null;
-        document = FIRE_STORE.collection(COLLECTION_NAME).document();
+        DocumentReference document = FIRE_STORE.collection(COLLECTION_NAME).document();
         document.set(workpost);
         document.update("like", workpost.getLike()-1);
     }
