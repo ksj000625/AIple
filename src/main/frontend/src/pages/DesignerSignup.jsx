@@ -306,8 +306,7 @@ export default function DesignerSignup() {
                                                     {errors.businessEmail.message}
                                                 </small>
                                             )
-                                        }
-                                        <div className="desc min">로그인 시 사용하는 이메일이 아닌 업무용 이메일을 등록해주세요.</div>
+                                        }                                        
                                     </div>
                                     <div className="form-group">
                                         <div className="form-label-container">

@@ -1,9 +1,6 @@
 .img-button-container {
 	display: flex;
 	flex-direction: column;
-	margin-top: 10%;
-	margin-bottom: 10%;
-	padding-right: 20%;
 }
 
 .img-button {
@@ -31,4 +28,17 @@
 
 .img-button > img {
 	height: 8.5rem;
+}
+
+@media  screen and (max-width:1080px) {
+	.img-button {
+		width: 250px;
+        height: 120px;
+	}
+	.img-button-title {
+		font-size: 1rem;
+	}
+	.img-button > img {
+		height: 6rem;
+	}
 }

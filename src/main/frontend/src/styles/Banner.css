@@ -6,6 +6,7 @@
 
 .banner-title-container {
     margin-bottom: 10em;
+    margin-right: 10%;
 }
 
 .banner-logo {
@@ -17,7 +18,7 @@
 .banner-img {
     height: 20em;
     flex-shrink: 0;
-    padding-left: 40%;
+    margin-left: 10%;
     margin-top: 50%;
 }
 
@@ -41,3 +42,36 @@
 .banner-button > .title {
     margin-right: 20px;   
 }
+
+@media screen and (max-width: 1080px){
+    .banner-logo {
+        font-size: 3rem;
+    }
+    .banner-img {
+        height: 15em;
+    }
+}
+@media screen and (max-width:740px) {
+	.banner-title-container {
+        margin-bottom: 0;
+        margin-right: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .banner-img {
+        display: none;
+    }
+
+    .banner-button {
+        height: 70px;
+    }
+
+    .banner-button > .title {
+        font-size: 1rem;
+    }
+
+}
+

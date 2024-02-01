@@ -39,7 +39,7 @@ export default function Home() {
                 </div>
                 <div className="inner">
                     <Link className="banner-button" to="/signup/designer">
-                        <div className="title">수익을 원하는 전문가라면? 지금 바로 디자이너 등록</div>
+                        <div className="title">수익을 원하는 전문가라면? 디자이너 등록</div>
                         <FontAwesomeIcon className="arrow-icon" icon={faArrowRight} size="xl"/>
                     </Link>
                 </div>
