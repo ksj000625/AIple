@@ -5,18 +5,13 @@ import "../styles/ImgButton.css"
 export default function Signup() {
     return (
         <div className="signup">
-            {/* <header>header</header> */}
             <div className="main">
-                <div className="inner">
                     <div className="main-container">
                         <div className="title-container">
                             <div className="title">AIple 회원가입</div>
                             <div className="desc">
-                                뤼튼에서는 창작의 힘을 이어받습니다.
-                                <br/>
-                                여러분의 아이디어와 우리의 AI 디자이너가 만나는 순간,
-                                <br/>
-                                놀라운 일이 시작됩니다
+                                유니크하고 합리적인 디자인과 아이디어를 원한다면 <br/>
+                                AI 디자이너 플랫폼, AIple
                             </div>
                         </div>
                         <div className="img-button-container">
@@ -34,7 +29,6 @@ export default function Signup() {
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
     )
