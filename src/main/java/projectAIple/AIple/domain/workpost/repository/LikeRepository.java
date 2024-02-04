@@ -63,14 +63,14 @@ public class LikeRepository {
         return !this.isNotExistId(querySnapshot);
     }
 
-    public void deleteLike(String id) {
-        Query query = FIRE_STORE.collection(COLLECTION_NAME).whereEqualTo("id", id);
+    public void deleteLike(Like like) {
+        Query query = FIRE_STORE.collection(COLLECTION_NAME).whereEqualTo("userId", like.getUserId()).whereEqualTo("workpostId", like.getWorkpostId());
         ApiFuture<QuerySnapshot> future = query.get();
         try {
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
             if (!documents.isEmpty()) {
-                Like like = documents.get(0).toObject(Like.class);
-                FIRE_STORE.collection(COLLECTION_NAME).document(like.getId()).delete();
+                Like targetlike = documents.get(0).toObject(Like.class);
+                FIRE_STORE.collection(COLLECTION_NAME).document(targetlike.getId()).delete();
                 return;
             }
             throw new RuntimeException("해당 id로 좋아요가 존재하지 않습니다.");

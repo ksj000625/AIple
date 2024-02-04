@@ -3,7 +3,9 @@ package projectAIple.AIple.domain.workpost.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import projectAIple.AIple.domain.workpost.model.Like;
 import projectAIple.AIple.domain.workpost.model.Workpost;
+import projectAIple.AIple.domain.workpost.repository.LikeRepository;
 import projectAIple.AIple.domain.workpost.repository.WorkpostRepository;
 
 import java.util.Collections;
@@ -14,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WorkpostService {
     private final WorkpostRepository workpostRepository;
+    private final LikeRepository likeRepository;
 
     /**
      * 모든 외주 게시글들의 정보를 반환하는 메소드
@@ -96,6 +99,28 @@ public class WorkpostService {
         } catch(Exception e) {
             log.error("WorkpostRepository editWorkpost exception occurred!");
             return false;
+        }
+    }
+
+    public String likeWorkpost(Like like, Workpost workpost) {
+        try {
+            likeRepository.addLike(like);
+            workpostRepository.likeWorkpost(workpost);
+            return "like success!";
+        } catch(Exception e) {
+            log.error("error occurred!");
+            return "like failed";
+        }
+    }
+
+    public String dislikeWorkpost(Like like, Workpost workpost) {
+        try {
+            likeRepository.deleteLike(like);
+            workpostRepository.dislikeWorkpost(workpost);
+            return "dislike success!";
+        } catch(Exception e) {
+            log.error("error occurred!");
+            return "dislike failed";
         }
     }
 }
