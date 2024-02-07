@@ -23,17 +23,10 @@ public class LikeRepository {
      * @param like 추가하려고 하는 Like 객체
      */
     public void addLike(Like like) {
-           Query query = FIRE_STORE.collection(COLLECTION_NAME).whereEqualTo("id", like.getId());
-           ApiFuture<QuerySnapshot> querySnapshot = query.get();
-           DocumentReference document = null;
-           if (isNotExistId(querySnapshot)) {
-               document = FIRE_STORE.collection(COLLECTION_NAME).document();
-               like.setId(document.getId());
-               document.set(like);
-               log.info("새로운 문서가 추가되었습니다. document ID: {}", document.getId());
-           } else {
-               throw new RuntimeException("이미 가입된 이메일입니다.");
-           }
+        DocumentReference document = FIRE_STORE.collection(COLLECTION_NAME).document();
+        like.setId(document.getId());
+        document.set(like);
+        log.info("새로운 문서가 추가되었습니다. document ID: {}", document.getId());
     }
 
     /**

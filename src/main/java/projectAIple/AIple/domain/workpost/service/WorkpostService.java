@@ -1,13 +1,16 @@
 package projectAIple.AIple.domain.workpost.service;
 
+import com.google.cloud.storage.Bucket;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import projectAIple.AIple.domain.workpost.model.Like;
 import projectAIple.AIple.domain.workpost.model.Workpost;
 import projectAIple.AIple.domain.workpost.repository.LikeRepository;
 import projectAIple.AIple.domain.workpost.repository.WorkpostRepository;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,6 +20,9 @@ import java.util.List;
 public class WorkpostService {
     private final WorkpostRepository workpostRepository;
     private final LikeRepository likeRepository;
+
+    @Autowired
+    private Bucket bucket;
 
     /**
      * 모든 외주 게시글들의 정보를 반환하는 메소드
@@ -62,9 +68,20 @@ public class WorkpostService {
      * @param workpost 추가할 외주 게시글 객체
      * @return 제대로 추가 되었는지 아닌지 boolean 전달 / true 성공, false 실패
      */
-    public boolean addWorkpost(Workpost workpost) {
+    public boolean addWorkpost(Workpost workpost, byte[] image) {
+
         try {
-            workpostRepository.addWorkpost(workpost);
+            String id = workpostRepository.addWorkpost(workpost);
+
+            // File 저장 위치를 선언
+            String blob = "/users/"+id+"/profile";
+            // 이미 존재하면 파일 삭제
+            if(bucket.get(blob) != null) {
+                bucket.get(blob).delete();
+            }
+            // 파일을 Bucket에 저장
+            bucket.create(blob, image);
+
             return true;
         } catch(Exception e) {
             log.error("WorkpostRepository addWorkpost exception occurred!");
@@ -94,6 +111,9 @@ public class WorkpostService {
      */
     public boolean deleteWorkpost(String id) {
         try {
+            String blob = "/users/"+id+"/profile";
+            bucket.get(blob).delete();
+
             workpostRepository.deleteWorkpostById(id);
             return true;
         } catch(Exception e) {
@@ -102,6 +122,12 @@ public class WorkpostService {
         }
     }
 
+    /**
+     * 외주 게시글의 좋아요를 누르는 메소드
+     * @param like 추가할 like 객체
+     * @param workpost 좋아요를 추가할 workpost객체
+     * @return 성공했는지 실패했는지 확인하기 위한 짧은 string
+     */
     public String likeWorkpost(Like like, Workpost workpost) {
         try {
             likeRepository.addLike(like);
@@ -113,6 +139,12 @@ public class WorkpostService {
         }
     }
 
+    /**
+     * 외주 게시글의 좋아요를 취소하는 메소드
+     * @param like 삭제할 like 객체
+     * @param workpost 좋아요를 감소시킬 workpost 객체
+     * @return 성공했는지 실패했는지 확인하기 위한 짧은 string
+     */
     public String dislikeWorkpost(Like like, Workpost workpost) {
         try {
             likeRepository.deleteLike(like);

@@ -57,6 +57,7 @@ public class SecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
                 .requestMatchers("/api/users/**")
+                .requestMatchers("/api/workpost/**")
                 .requestMatchers("/api/users/signUpEmail/**")
                 .requestMatchers("/")
                 .requestMatchers("/resources/**");

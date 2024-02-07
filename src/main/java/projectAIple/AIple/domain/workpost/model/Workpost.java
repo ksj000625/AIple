@@ -10,7 +10,6 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Builder
 @Data
 public class Workpost {
     @Id
@@ -22,13 +21,15 @@ public class Workpost {
     @Column
     private String category;
     @Column
-    private String designer;
+    private String designerId;
     @Column
-    private double price;
+    private double minPrice;
     @Column
-    private int like;
+    private int numLike;
     @Column
     private Timestamp create_dt;
     @Column
     private Timestamp update_dt;
+
+    public Workpost() {}
 }

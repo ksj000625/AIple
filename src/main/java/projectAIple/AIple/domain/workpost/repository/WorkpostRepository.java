@@ -73,16 +73,15 @@ public class WorkpostRepository {
      * 새로운 외주 게시글을 추가하는 메소드
      * @param workpost 추가할 외주 게시글 데이터
      */
-    public void addWorkpost(Workpost workpost) {
-        Query query = FIRE_STORE.collection(COLLECTION_NAME).whereEqualTo("id", workpost.getId());
-        ApiFuture<QuerySnapshot> future = query.get();
-
+    public String addWorkpost(Workpost workpost) {
         DocumentReference document = FIRE_STORE.collection(COLLECTION_NAME).document();
         workpost.setId(document.getId());
+        workpost.setImage("/users/"+workpost.getId()+"/profile");
         document.set(workpost);
         document.update("create_dt", Timestamp.now());
         document.update("update_dt", Timestamp.now());
         log.info("새로운 문서가 추가되었습니다. document ID: {}", document.getId());
+        return document.getId();
     }
 
     /**
@@ -129,7 +128,7 @@ public class WorkpostRepository {
 
         DocumentReference document = FIRE_STORE.collection(COLLECTION_NAME).document();
         document.set(workpost);
-        document.update("like", workpost.getLike()+1);
+        document.update("like", workpost.getNumLike()+1);
     }
 
     /**
@@ -142,6 +141,6 @@ public class WorkpostRepository {
 
         DocumentReference document = FIRE_STORE.collection(COLLECTION_NAME).document();
         document.set(workpost);
-        document.update("like", workpost.getLike()-1);
+        document.update("like", workpost.getNumLike()-1);
     }
 }

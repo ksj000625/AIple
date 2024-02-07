@@ -9,7 +9,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Builder
 @Data
 public class Like {
     @Id

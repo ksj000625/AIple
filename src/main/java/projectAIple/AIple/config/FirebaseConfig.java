@@ -1,9 +1,11 @@
 package projectAIple.AIple.config;
 
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.storage.Bucket;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.cloud.StorageClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import projectAIple.AIple.domain.user.repository.UserRepository;
@@ -26,16 +28,28 @@ public class FirebaseConfig {
     }
 
     @Bean
-    public FirebaseAuth firebaseAuth() throws IOException {
+    public FirebaseApp firebaseApp() throws IOException {
         FileInputStream serviceAccount = new FileInputStream("src/main/resources/aiple-firebase-key.json");
 
         FirebaseOptions.Builder optionBuilder = FirebaseOptions.builder();
         FirebaseOptions options = optionBuilder
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .setStorageBucket("aiple-8f8ef.appspot.com")
                 .build();
-        FirebaseApp.initializeApp(options);
+        FirebaseApp app = FirebaseApp.initializeApp(options);
 
-        return FirebaseAuth.getInstance(FirebaseApp.getInstance());
+        return app;
+    }
+
+    @Bean
+    public FirebaseAuth firebaseAuth() throws IOException {
+        return FirebaseAuth.getInstance(firebaseApp());
+    }
+
+    @Bean
+    public Bucket bucket() throws IOException {
+        // Storage Bucket을 Bean으로 등록
+        return StorageClient.getInstance(firebaseApp()).bucket();
     }
 
 
