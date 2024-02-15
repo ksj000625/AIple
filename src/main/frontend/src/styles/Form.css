@@ -67,14 +67,14 @@
 }
 
 .profile-image {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-right: 10px;
     border: #CFCFCF solid 1px;
-    border-radius: 5px;
+    border-radius: 50%;
     cursor: pointer;
 }
 
@@ -82,10 +82,10 @@
     margin-left: 10px;
 }
 
-.submit-button-container {
+.button-container {
     display: flex;
     justify-content: flex-end;
-    margin-right: 40px;
+    margin-right: 2%;
 }
 
 .submit-button {
@@ -99,6 +99,7 @@
     font-weight: bold;
     margin-top: 10px;
     cursor: pointer;
+    line-height: 40px;
 }
 
 .submit-button:disabled {

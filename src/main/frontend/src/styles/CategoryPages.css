@@ -1,4 +1,4 @@
-.category-pages-container {
+.center-col {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -6,7 +6,7 @@
 }
 
 .category-pages {
-    padding-top: 170px;
+    padding-top: 80px;
     width: 1080px;
 }
 
@@ -14,7 +14,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 0;
+    padding-bottom: 20px;
 }
 
 .sort-wrap {

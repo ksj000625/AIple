@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useParams} from "react-router-dom";
-import Product from "../components/Product";
-import "../styles/CategoryPages.css";
+import Product from "../../components/Product";
+import "../../styles/CategoryPages.css";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 
@@ -13,7 +13,7 @@ export default function CategoryPages() {
             image: process.env.PUBLIC_URL + "/로고예시.jpg",
             name: "트렌디하고 독특한 디자인의 로고 만들어드립니다",
             category: "로고",
-            designer: "김작가",
+            designerName: "김작가",
             price: 5,
             like: 300,
             date: "2024-01-01"
@@ -22,7 +22,7 @@ export default function CategoryPages() {
             image: process.env.PUBLIC_URL + "/로고예시.jpg",
             name: "웹 UI UX 디자인",
             category: "웹앱",
-            designer: "이작가",
+            designerName: "이작가",
             price: 1,
             like: 122,
             date: "2024-01-02"
@@ -31,7 +31,7 @@ export default function CategoryPages() {
             image: process.env.PUBLIC_URL + "/로고예시.jpg",
             name: "앱 UI/UX 디자인",
             category: "웹앱",
-            designer: "홍작가",
+            designerName: "홍작가",
             price: 12,
             like: 513,
             date: "2024-01-01"
@@ -40,7 +40,7 @@ export default function CategoryPages() {
             image: process.env.PUBLIC_URL + "/로고예시.jpg",
             name: "영화 포스터 디자인",
             category: "인쇄물",
-            designer: "김작가",
+            designerName: "김작가",
             price: 3,
             like: 12,
             date: "2024-01-04"
@@ -49,7 +49,7 @@ export default function CategoryPages() {
             image: process.env.PUBLIC_URL + "/로고예시.jpg",
             name: "고급 명함 디자인",
             category: "인쇄물",
-            designer: "다람쥐",
+            designerName: "다람쥐",
             price: 6,
             like: 122,
             date: "2024-01-15"
@@ -58,7 +58,7 @@ export default function CategoryPages() {
             image: process.env.PUBLIC_URL + "/로고예시.jpg",
             name: "PPT 디자인",
             category: "PPT",
-            designer: "다람쥐",
+            designerName: "다람쥐",
             price: 12,
             like: 211,
             date: "2024-01-14"
@@ -67,7 +67,7 @@ export default function CategoryPages() {
             image: process.env.PUBLIC_URL + "/로고예시.jpg",
             name: "귀여운 캐릭터 디자인",
             category: "일러스트",
-            designer: "김밥",
+            designerName: "김밥",
             price: 15,
             like: 324,
             date: "2024-01-11"
@@ -76,7 +76,7 @@ export default function CategoryPages() {
             image: process.env.PUBLIC_URL + "/로고예시.jpg",
             name: "상반신 캐릭터 3D 모델링",
             category: "3D모델링",
-            designer: "김밥",
+            designerName: "김밥",
             price: 23,
             like: 3,
             date: "2024-01-19"
@@ -85,7 +85,7 @@ export default function CategoryPages() {
             image: process.env.PUBLIC_URL + "/로고예시.jpg",
             name: "심플한 웹 디자인",
             category: "웹앱",
-            designer: "생명수",
+            designerName: "생명수",
             price: 13,
             like: 17,
             date: "2024-01-2"
@@ -94,7 +94,7 @@ export default function CategoryPages() {
             image: process.env.PUBLIC_URL + "/로고예시.jpg",
             name: "브로슈어 디자인",
             category: "인쇄물",
-            designer: "hello",
+            designerName: "hello",
             price: 3,
             like: 231,
             date: "2024-01-15"
@@ -103,7 +103,7 @@ export default function CategoryPages() {
             image: process.env.PUBLIC_URL + "/로고예시.jpg",
             name: "고급 명함 디자인",
             category: "인쇄물",
-            designer: "다람쥐",
+            designerName: "다람쥐",
             price: 4,
             like: 53,
             date: "2024-01-15"
@@ -112,7 +112,7 @@ export default function CategoryPages() {
             image: process.env.PUBLIC_URL + "/로고예시.jpg",
             name: "고급 명함 디자인",
             category: "인쇄물",
-            designer: "다람쥐",
+            designerName: "다람쥐",
             price: 6,
             like: 53,
             date: "2024-01-15"
@@ -121,12 +121,25 @@ export default function CategoryPages() {
             image: process.env.PUBLIC_URL + "/로고예시.jpg",
             name: "고급 명함 디자인",
             category: "인쇄물",
-            designer: "다람쥐",
+            designerName: "다람쥐",
             price: 6,
             like: 53,
             date: "2024-01-15"
         }
-    ];
+    ]; 
+
+    /* const [products, setProducts] = useState(null);
+
+    useEffect(() => {
+        fetch(`/api/products`)
+            .then(res => res.json())
+            .then(data => {
+                setProducts(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }, []); */
 
     /** 최신순, 인기순, 날짜순 정렬 */
     const [order, setOrder] = useState(["timeStamp", "createdAt"]);
@@ -188,7 +201,7 @@ export default function CategoryPages() {
     }
 
     return (
-        <div className="category-pages-container">
+        <div className="main center-col">
             <div className="category-pages">
                 <div className="inner">
                     <div className="toolbar">

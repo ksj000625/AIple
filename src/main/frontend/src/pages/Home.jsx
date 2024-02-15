@@ -6,8 +6,8 @@ import {Link} from "react-router-dom";
 export default function Home() {
     return (
         <div className="Home">
-            <div className="main">
-                <div className="banner">
+            <div className="bg">
+                <div className="main banner">
                     <div className="inner">
                         <div className="main-container">
                             <div className="banner-title-container">

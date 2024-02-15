@@ -7,12 +7,12 @@ import "./App.css";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./pages/Home";
-import Signup from "./pages/Signup";
-import ClientSignup from "./pages/ClientSignup";
-import DesignerSignup from "./pages/DesignerSignup";
-import Main from "./pages/Main";
+import Signup from "./pages/signup/Signup";
+import ClientSignup from "./pages/signup/ClientSignup";
+import DesignerSignup from "./pages/signup/DesignerSignup";
+import Main from "./pages/main/Main";
+import Detail from "./pages/Detail";
 import CategoryBar from "./components/CategoryBar";
-import axios from "axios";
 
 
 function MainRoutes() {
@@ -22,13 +22,14 @@ function MainRoutes() {
             <Routes>
                 <Route path="/" element={<Main />}/>
                 <Route path="/:categoryName" element={<Main />}/>
+                <Route path="/detail/:id" element={<Detail />}/>
             </Routes>
         </div>
     );
 }
 
 function App() {
-	// const { user } = useContext(UserContext);
+    // const { user } = useContext(UserContext);
 
     return (
         <BrowserRouter>

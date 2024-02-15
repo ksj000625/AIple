@@ -2,10 +2,10 @@ import React, {useState, useRef, useEffect} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStarOfLife} from "@fortawesome/free-solid-svg-icons";
 import {useForm} from "react-hook-form";
-import "../styles/Form.css";
+import "../../styles/Form.css";
 import axios from "axios";
-import {auth} from "../auth/firebaseAuth";
-import {defaultHeaders} from "../config/clientConfig";
+import {auth} from "../../auth/firebaseAuth";
+import {defaultHeaders} from "../../config/clientConfig";
 import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
 
 export default function ClientSignup() {
@@ -100,7 +100,7 @@ export default function ClientSignup() {
     }
 
     return (<div className="ClientSignup">
-        <div className="main">
+        <div className="main bg">
             <div className="inner">
                 <div className="main-col-container">
                     <div className="center-title-container">
@@ -264,7 +264,7 @@ export default function ClientSignup() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="submit-button-container">
+                            <div className="button-container">
                                 <button
                                     type="submit"
                                     disabled={isSubmitting && !isValid}

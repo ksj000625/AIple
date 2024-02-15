@@ -1,9 +1,9 @@
 import {useState} from "react";
 import { Link } from "react-router-dom";
-import "../styles/ImgButton.css"
-import RegisterForm from "../components/RegisterForm";
+import "../../styles/ImgButton.css"
+import RegisterForm from "../../components/RegisterForm";
 import Modal from 'react-modal';
-import "../styles/Modal.css"
+import "../../styles/Modal.css"
 
 
 export default function Signup() {
@@ -14,11 +14,11 @@ export default function Signup() {
 
     
     return (
-        <div className="signup">
+        <div className="signup bg">
             {/* <header>header</header> */}
             <div className="main">
                 <div className="inner">
-                    <div className="main-container">
+                    <div className="main-container padding-topdown">
                         <div className="title-container">
                             <div className="title">AIple 회원가입</div>
                             <div className="desc">

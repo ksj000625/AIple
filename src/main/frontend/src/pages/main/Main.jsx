@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link, useRouteMatch, Routes, useParams } from "react-router-dom";
-import CategoryPage from "../pages/CategoryPages"
+import CategoryPage from "./CategoryPages"
 
 export default function Main() {
     return (
