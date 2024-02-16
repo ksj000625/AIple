@@ -1,34 +1,61 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, {useEffect, useRef, useState} from "react";
+import {Link} from "react-router-dom";
 import "../styles/Header.css"
+import "../App.css"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faBell} from "@fortawesome/free-solid-svg-icons/faBell";
 
 export default function Header() {
+    const [showsNotice, setShowNotice] = useState(false);
+    const detectingAlarmRef = useRef(null);
+
+    useEffect(() => {
+        const handleDetect = (e : React.BaseSyntheticEvent | MouseEvent) => {
+            if (detectingAlarmRef.current && !detectingAlarmRef.current.contains(e.target)) {
+                setShowNotice(false);
+            }
+        };
+        document.addEventListener('mousedown', handleDetect);
+        return() => {
+            document.removeEventListener('mousedown', handleDetect);
+        };
+    }, []);
+
     return (
-        <div className="header-container">
-            <div className="header-wrap">
-                <div className="header-left-wrap">
-                    <Link className="logo" to='/'>
-                        Home
-                    </Link>
+        <div className="header-wrap max-width">
+            <header className="header">
+                <div className="content">
+                    <div>
+                        <Link to="/">
+                            <h2>AIple</h2>
+                        </Link>
+                    </div>
+                    <nav className="navigation" >
+                        <ul>
+                            <li>
+                                <ul className="Bell" onClick={() => setShowNotice(true)}>
+                                    <FontAwesomeIcon icon={faBell} color="gold"/> {
+                                        showsNotice && (
+                                            <ul ref={detectingAlarmRef} className="BellWindow">
+                                                <h4>알림</h4>
+                                            </ul>
+                                        )
+                                    }
+                                </ul>
+                            </li>
+                            <li className="login">
+                                로그인
+                            </li>
+                            <li className="signup">
+                                <Link to="/Signup">
+                                    회원가입
+                                </Link>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
-                <ul>
-                    <li>
-                        <Link className="header-nav-item" to="/signup">
-                            가입
-                        </Link>
-                    </li>
-                    <li>
-                        <Link className="header-nav-item" to="/signup/client">
-                            고객 가입
-                        </Link>
-                    </li>
-                    <li>
-                        <Link className="header-nav-item" to="/signup/designer">
-                            디자이너 가입
-                        </Link>
-                    </li>
-                </ul>
-            </div>
+            </header>
         </div>
+
     )
 }

@@ -1,6 +1,8 @@
 .img-button-container {
 	display: flex;
 	flex-direction: column;
+	margin-top: 10%;
+	margin-bottom: 10%;
 }
 
 .img-button {

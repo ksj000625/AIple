@@ -13,7 +13,7 @@ import DesignerSignup from "./pages/signup/DesignerSignup";
 import Main from "./pages/main/Main";
 import Detail from "./pages/Detail";
 import CategoryBar from "./components/CategoryBar";
-
+import Category from "./components/Category";
 
 function MainRoutes() {
     return (
@@ -34,6 +34,7 @@ function App() {
     return (
         <BrowserRouter>
             <Header/>
+            <Category/>
             <Routes>
                 <Route path="/" element={<Home />}/>
                 <Route path="/signup" element={<Signup />}/>
@@ -41,6 +42,7 @@ function App() {
                 <Route path="/signup/designer" element={<DesignerSignup />}/>
                 <Route path="/main/*" element={<MainRoutes/>}/>
             </Routes>
+            <footer></footer>
         </BrowserRouter>
     );
 }

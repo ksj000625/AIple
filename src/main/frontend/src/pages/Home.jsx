@@ -9,7 +9,7 @@ export default function Home() {
             <div className="bg">
                 <div className="main banner">
                     <div className="inner">
-                        <div className="main-container">
+                        <div className="main-container center">
                             <div className="banner-title-container">
                                 <div className="title">디자인을 AI와 함께 완성하다</div>
                                 <div className="banner-logo">AIple</div>

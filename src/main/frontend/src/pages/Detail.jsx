@@ -49,7 +49,8 @@ function Detail() {
             draft: 1,
             origin: true,
             size: "1000*1000 이내",
-            descImg: "https://cdn-dantats.stunning.kr/prod/markets/81696fb7-1090-46db-bd54-f4b700e4d6ce/store/NrcnTzJtvQqfWH7N.pm01.jpg"
+            descImg: "https://cdn-dantats.stunning.kr/prod/markets/81696fb7-1090-46db-bd54-f4b700e4d" +
+                    "6ce/store/NrcnTzJtvQqfWH7N.pm01.jpg"
         }, {
             id: 2,
             image: process.env.PUBLIC_URL + "/로고예시.jpg",
@@ -202,61 +203,61 @@ function Detail() {
     if (!product || !designer) {
         return <div>Loading...</div>;
     }
-    
-    
 
     return (
-        <div className="main">
-            <div className="inner category-bar-padding">
-                <div className="main-container">
-                    <div className="detail-container">
-                        <img className="product-image" src={product.image} alt={product.name}/>
-                        <DetailTab product={product} designer={designer}/>
-                    </div>
-                    <div className="card">
-                        <div className="prod-card-header">
-                            <h2>{product.name}</h2>
-                            <div className="icon-container">
-                                <FontAwesomeIcon className="icon" icon={faHeart} size="xl"/>
-                                <FontAwesomeIcon className="icon" icon={faShareNodes} size="xl"/>
-                            </div>
+        <div className="center">
+            <div className="main max-width">
+                <div className="inner category-bar-padding">
+                    <div className="main-container">
+                        <div className="detail-container">
+                            <img className="product-image" src={product.image} alt={product.name}/>
+                            <DetailTab product={product} designer={designer}/>
                         </div>
-                        <div className="prod-card-content">
-                            <div className="prod-desc-container">
-                                <div className="prod-desc">
-                                    <p className="desc">작업 기간</p>
-                                    <p className="desc point-desc">{product.period}</p>
-                                </div>
-                                <div className="prod-desc">
-                                    <p className="desc">수정 횟수</p>
-                                    <p className="desc point-desc">{product.modify}</p>
-                                </div>
-                                <div className="prod-desc">
-                                    <p className="desc">시안 수</p>
-                                    <p className="desc point-desc">{product.draft}만원</p>
-                                </div>
-                                <div className="prod-desc">
-                                    <p className="desc">카테고리</p>
-                                    <p className="desc point-desc">{product.category}</p>
-                                </div>
-                                <div className="prod-desc">
-                                    <p className="desc">원본 제공</p>
-                                    {
-                                        product.origin == true
-                                            ? <FontAwesomeIcon className="icon" icon={faCheck}/>
-                                            : <FontAwesomeIcon className="icon" icon={faX}/>
-                                    }
-                                </div>
-                                <div className="prod-desc">
-                                    <p className="desc">규격</p>
-                                    <p className="desc point-desc">{product.size}</p>
+                        <div className="card">
+                            <div className="prod-card-header">
+                                <h2>{product.name}</h2>
+                                <div className="icon-container">
+                                    <FontAwesomeIcon className="icon" icon={faHeart} size="xl"/>
+                                    <FontAwesomeIcon className="icon" icon={faShareNodes} size="xl"/>
                                 </div>
                             </div>
-                            <div className="button-container">
-                                <div className="button submit-button">구매하기</div>
+                            <div className="prod-card-content">
+                                <div className="prod-desc-container">
+                                    <div className="prod-desc">
+                                        <p className="desc">작업 기간</p>
+                                        <p className="desc point-desc">{product.period}</p>
+                                    </div>
+                                    <div className="prod-desc">
+                                        <p className="desc">수정 횟수</p>
+                                        <p className="desc point-desc">{product.modify}</p>
+                                    </div>
+                                    <div className="prod-desc">
+                                        <p className="desc">시안 수</p>
+                                        <p className="desc point-desc">{product.draft}만원</p>
+                                    </div>
+                                    <div className="prod-desc">
+                                        <p className="desc">카테고리</p>
+                                        <p className="desc point-desc">{product.category}</p>
+                                    </div>
+                                    <div className="prod-desc">
+                                        <p className="desc">원본 제공</p>
+                                        {
+                                            product.origin == true
+                                                ? <FontAwesomeIcon className="icon" icon={faCheck}/>
+                                                : <FontAwesomeIcon className="icon" icon={faX}/>
+                                        }
+                                    </div>
+                                    <div className="prod-desc">
+                                        <p className="desc">규격</p>
+                                        <p className="desc point-desc">{product.size}</p>
+                                    </div>
+                                </div>
+                                <div className="button-container">
+                                    <div className="button submit-button">구매하기</div>
+                                </div>
                             </div>
+                            <DesignerProfile designer={designer}/>
                         </div>
-                        <DesignerProfile designer={designer}/>                        
                     </div>
                 </div>
             </div>

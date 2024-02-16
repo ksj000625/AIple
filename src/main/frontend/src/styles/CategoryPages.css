@@ -6,7 +6,6 @@
 }
 
 .category-pages {
-    padding-top: 80px;
     width: 1080px;
 }
 
@@ -78,5 +77,3 @@
     flex-wrap: wrap;
     align-items: center;
 }
-
-

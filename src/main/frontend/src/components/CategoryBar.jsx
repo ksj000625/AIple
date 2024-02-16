@@ -6,7 +6,7 @@ export default function CategoryBar() {
     return (
         <div className="category-bar">
             <div className="thick-line"></div>
-            <nav className="category-container">
+            <nav className="category-container center">
                 <ul>
                     <li className="category">
                         <Link to="/main">전체</Link>

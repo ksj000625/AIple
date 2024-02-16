@@ -2,7 +2,6 @@
     width: 100%;
     height: 75px;
     border-bottom: #CFCFCF solid 1px;
-    position: fixed;
     background-color: #fff;
     z-index: 1;
 }
@@ -13,16 +12,10 @@
     background-color: #8220ff;
 }
 
-.category-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
 .category-container > ul {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     width: 1080px;
     list-style: none;
